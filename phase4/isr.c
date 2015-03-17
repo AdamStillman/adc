@@ -73,10 +73,10 @@ void TimerISR() {
 	
 	if(pcb[CRP].runtime == TIME_LIMIT){   //if the runtime reaches the set time limit
 		pcb[CRP].total_runtime += TIME_LIMIT;      //simply total up the total runtime of CRP
-   pcb[CRP].runtime = 0;   //(need to rotate to the next in run queue)
-   pcb[CRP].state = RUN;
-   EnQ(CRP, &run_q);      //queue it to run queue
-	 CRP = -1;     // reset CRP (to -1, means none)
+		 pcb[CRP].runtime = 0;   //(need to rotate to the next in run queue)
+		 pcb[CRP].state = RUN;
+		 EnQ(CRP, &run_q);      //queue it to run queue
+		 CRP = -1;     // reset CRP (to -1, means none)
 	}
 }
 
