@@ -139,7 +139,9 @@ void Kernel(TF_t *TF_ptr) {
 	
 //   call timer ISR to service timer interrupt (as if it just occurred)
 	switch(TF_ptr->intr_num){
-		case TIMER_INTR: TimerISR(); break;
+		case TIMER_INTR: 
+			TimerISR(); 
+			break;
 		case SLEEP_INTR:
 			SleepISR(TF_ptr->ebx);
 			break;
