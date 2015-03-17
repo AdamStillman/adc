@@ -132,9 +132,8 @@ void Kernel(TF_t *TF_ptr) {
    char key;
    
 //   change state of CRP to kernel mode
-//cons_printf("setting kmode\n");
 	pcb[CRP].mode = KMODE;
-//cons_printf("in kernel now\n");
+
 //save tf_t to pcb[crp].tf_t
 	pcb[CRP].TF_ptr = TF_ptr;
 	
@@ -187,12 +186,9 @@ if(cons_kbhit()){
 	}		
 }  
 //   call SelectCRP() to settle/determine for next CRP
-//cons_printf("calling crp\n");
 	SelectCRP();
-	//breakpoint();
-//cons_printf("calling dispatch\n");
-	//cons_printf("CRP %d\n", CRP);
+
 	Dispatch(pcb[CRP].TF_ptr);
-//cons_printf("dispatch called\n");
+
 }
 
