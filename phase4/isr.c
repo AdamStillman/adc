@@ -34,13 +34,6 @@ void CreateISR(int pid) {
 	}
 	else pcb[pid].TF_ptr->eip = (unsigned int) UserProc;
 
-	/* else if(pid%2 == 0) {
-		pcb[pid].TF_ptr->eip = (unsigned int) Consumer; //If pid is even goes to consumer
-  	 }
-	else{
-    pcb[pid].TF_ptr->eip = (unsigned int) Producer; //If pid is odd goes to producer
-   }*/
-	//	cons_printf("in user process\n");	
 		//fillout trapframe of new proc
    	pcb[pid].TF_ptr->eflags = EF_DEFAULT_VALUE | EF_INTR;
  	pcb[pid].TF_ptr->cs = get_cs();
