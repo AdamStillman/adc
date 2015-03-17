@@ -86,14 +86,14 @@ void InitIDT(){
 	IDT_ptr = get_idt_base(); 	//get where idt is
 	cons_printf("in idt, IDT is at memory location %u. \n", IDT_ptr);
 	SetEntry(32, TimerEntry);	//prime IDT entry
-//	outportb(0x21, ~1); //pic mask
 	SetEntry(48 , GetPidEntry);
 	SetEntry(49 , SleepEntry);
-  SetEntry(50, SemWaitEntry);
-  SetEntry(51, SemPostEntry);
-  SetEntry(52, SemGetEntry);
-  SetEntry(39, IRQ7Entry);
-  outportb(0x21, ~129); //pic mask to open irq7?
+  //new phase
+  	SetEntry(50, SemWaitEntry);
+  	SetEntry(51, SemPostEntry);
+  	SetEntry(52, SemGetEntry);
+  	SetEntry(39, IRQ7Entry);
+  	outportb(0x21, ~129); //pic mask to open irq7?
 
 }
 
