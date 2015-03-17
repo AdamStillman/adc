@@ -10,7 +10,13 @@
 #include "proc.h"       // processes such as Init()
 #include "type.h"       // processes such as Init()
 #include "entry.h"
-
+//#include "global.h"
+//#include <spede/stdio.h>
+//#include <spede/flames.h>
+//#include <spede/machine/io.h>
+//#include <spede/machine/proc_reg.h>
+//#include <spede/machine/seg.h>
+//#include <spede/machine/pic.h>
 // kernel data structure:
 int CRP, sys_time;                // current running PID, -1 means no process
 q_t run_q, none_q, sleep_q;      // processes ready to run and not used
@@ -18,12 +24,7 @@ pcb_t pcb[MAX_PROC];    // process table
 
 char stack[MAX_PROC][STACK_SIZE]; // run-time stacks for processes
 struct i386_gate *IDT_ptr;
-
-semaphore_t semaphore[MAX_PROC];
-int product; 
-int product_semaphore;
-q_t semaphore_q;
-
+void InitIDT();
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
 	struct i386_gate *gateptr = &IDT_ptr[entry_num];
 	//cons_printf("in set enty\n");	
@@ -36,7 +37,6 @@ int main() {
 	InitData(); // to initialize kernel data
 	CreateISR(0); //to create Idle process (PID 0)
 	InitIDT();
-  cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 	
    return 0;
@@ -47,45 +47,32 @@ int main() {
 
 void InitData() {
 	int i;
-  sys_time = 0;
-
 //cons_printf("initializng data\n");
     //initialize 2 queues (use MyBzero() call)
-	initq(&run_q);
-	initq(&none_q);
-	initq(&sleep_q);
-	MyBzero((char *) &run_q, MAX_PROC);
-	MyBzero((char *) &none_q, MAX_PROC);
-	MyBzero((char *) &sleep_q, MAX_PROC);
-  MyBzero((char *) &semaphore_q, MAX_PROC); //clears the semaphore queue
-
+	MyBzero(&run_q,0);
+	MyBzero(&none_q,0);
+	MyBzero(&sleep_q,0); 
+ 	
 	//set CRP to 0
- 	for(i=1; i<Q_SIZE; i++){//thats correct
-		pcb[i].state = NONE; //set state to NONE in pcb[1~19]
-		EnQ(i, &none_q );// queue PID's 1~19 (skip 0) into none_q (not used PID's)	 
-    EnQ(i, &semaphore_q );
-	}
-
-
-  product_semaphore = DeQ(&semaphore_q);
-  MyBzero((char *) semaphore, MAX_PROC);//might need to be &semaphore_q[product_semaphore].wait_q
-  semaphore[product_semaphore].count = 1;
-  product = 0;
-
+	sys_time = 0;
 	CRP = 0;
+	for(i=1; i<MAX_PROC; i++){//thats correct
+		pcb[i].state = NONE; //set state to NONE in pcb[1~19]
+		EnQ(i, &none_q );// queue PID's 1~19 (skip 0) into none_q (not used PID's)		   
+   
+	}
+	
+
 	//cons_printf("done init data\n");
 }
 //new code
 void InitIDT(){
 	IDT_ptr = get_idt_base(); 	//get where idt is
-	cons_printf("in idt, IDT is at memory location %u. \n", IDT_ptr);
+//	cons_printf("in idt, IDT is at memory location %u. \n", IDT_ptr);
 	SetEntry(32, TimerEntry);	//prime IDT entry
-	outportb(0x21, ~1); //pic mask
-	SetEntry(48 , GetPidEntry);
-	SetEntry(49 , SleepEntry);
-  SetEntry(50, SemWaitEntry);
-  SetEntry(51, SemPostEntry);
-		//0x21 is a PIC mask, ~1 is mask
+	SetEntry(48 , SleepEntry);
+	SetEntry(49 , GetPidEntry);
+	outportb(0x21, ~0x01);		//0x21 is a PIC mask, ~1 is mask
 //	cons_printf("The interrupt has been set leaving idt \n");
 }
 
@@ -100,28 +87,24 @@ void SelectCRP() {       // pick PID as CRP
 
 				//   if no processes to run (check size in run queue, is it zero)
 				//      set CRP to Idle process ID
-	if(run_q.size == 0){
-      CRP = 0; 
+	if(EmptyQ(&run_q)) CRP = 0; 
 
 				//   else set CRP to first in run queue (dequeue it)
-    } else{ 
-	CRP = run_q.q[run_q.head];
-    	DeQ(&run_q);
-	
-}			//   change mode of CRP to UMODE
-	    pcb[CRP].mode= UMODE;
+	else 
+	CRP = DeQ(&run_q);
+
+				//   change mode of CRP to UMODE
+	pcb[CRP].mode= UMODE;
 //	cons_printf("changed mode to umode\n");
 				//   change state of CRP to RUNNING
-	    pcb[CRP].state= RUNNING;
+	pcb[CRP].state= RUNNING;
 //	cons_printf("setting state to rnunning\n");
 //cons_printf("leaving crp\n");
-    
 }
 
 void Kernel(TF_t *TF_ptr) {
 	
    int pid;
-   char key;
    
 //   change state of CRP to kernel mode
 //cons_printf("setting kmode\n");
@@ -139,28 +122,21 @@ void Kernel(TF_t *TF_ptr) {
 		case GETPID_INTR:
 			GetPidISR();		
 			break;
-    case SEMWAIT_INTR:
-      SemWaitISR(CRP);
-      break;
-    case SEMPOST_INTR:
-      SemPostISR(CRP);
-      break;
 		default: 
 		printf("dont PANIC!!!!!!!");
-		breakpoint();
+		//breakpoint();
 		break;
 	
 	}
 
 //cons_printf("just before if statement\n");     
 if(cons_kbhit()){
-	key = cons_getchar();
+	char key = cons_getchar();
 	switch(key){
 		case 'n':
 			if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
 			else {
-				pid = DeQ(&none_q);
-//				printf("the pid is: %d \n", pid); 
+				pid = DeQ(&none_q); 
 				CreateISR(pid);
 			}
 	   		break;	
@@ -174,7 +150,7 @@ if(cons_kbhit()){
 	SelectCRP();
 	//breakpoint();
 //cons_printf("calling dispatch\n");
-	//cons_printf("CRP %d\n", CRP);
+	cons_printf("CRP %d\n", CRP);
 	Dispatch(pcb[CRP].TF_ptr);
 //cons_printf("dispatch called\n");
 }

@@ -6,12 +6,10 @@
 #include "type.h" // q_t needs be defined in code below
 int EmptyQ(q_t *);
 int FullQ(q_t *);
-void MyBzero(char *, int);
+void MyBzero(q_t *, int);
 void MyBZero(void *, int);
 int DeQ(q_t *);
 void EnQ(int, q_t *);
-void initq(q_t *);
-
 
 #endif
 

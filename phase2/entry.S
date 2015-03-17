@@ -22,25 +22,17 @@ ENTRY(Dispatch)
    add $4, %esp         // skip 4 bytes that stored intr_num
    iret
 
-ENTRY(SleepEntry)
-   pushl $SLEEP_INTR
+// push intr type number then jump to common handler
+ENTRY(TimerEntry)
+   pushl $TIMER_INTR
    jmp IntoKernel
 
 ENTRY(GetPidEntry)
    pushl $GETPID_INTR
    jmp IntoKernel
 
-// push intr type number then jump to common handler
-ENTRY(TimerEntry)
-   pushl $TIMER_INTR
-   jmp IntoKernel
-
-ENTRY(SemWaitEntry)
-   pushl $SEMWAIT_INTR
-   jmp IntoKernel
-
-ENTRY(SemPostEntry)
-   pushl $SEMPOST_INTR
+ENTRY(SleepEntry)
+   pushl $SLEEP_INTR
    jmp IntoKernel
 
 // Common IRQ entry, save context and call Kmain()

@@ -9,15 +9,45 @@ int EmptyQ(q_t *p){
 }
 
 int FullQ(q_t *p){
+	
 	return (p->size==MAX_PROC);
 }
 
-
-void MyBzero(q_t *p, int size) {//trying changing char to Q_t
-	p->size = size;
-	p->head = size;
-	p->tail = size;
+void initq(q_t *q){
+	q->size = 0;
+	q->head = 0;
+	q->tail = 0;
 }
+
+
+void MyBzero(char *p, int size) {//trying changing char to Q_t
+/*
+  int i;
+	q->size = 0;
+	q->head = 0;
+	q->tail = 0;
+  for(i = 0; i < MAX_PROC; i++) {
+    p[i] = '\0'; 
+  } 
+  while(size--) *p++ = (char)0;   
+*/
+
+int i;
+for(i=0; i<size; i++){
+	*p++ = '\0';
+}
+
+
+
+
+} 
+
+/*
+ * void MyBzero (char *p, int size) {
+ *  while(size--) *p++ = (char) 0;
+ *
+ * }
+ */
 
 void MyBZero(void *s, int n) {
 int i;
@@ -27,10 +57,6 @@ for (i = 0; i < n; i++) {
 }
 
 void EnQ(int pid, q_t *p) {
-// ?????????????????????????????????????????????????
-// show error msg and return if queue's already full
-// needs coding
-// ?????????????????????????????????????????????????
 
 	if(FullQ(p) ){
 		cons_printf("Que is full!\n");	
@@ -38,20 +64,25 @@ void EnQ(int pid, q_t *p) {
 	}
 
 	p->q[p->tail] = pid;
-	p->tail +=1;
+	p->tail ++;
 	
 	if(p->tail >= Q_SIZE) p->tail=0;
 
-	p->size +=1;
+	p->size ++;
 }
 
 int DeQ(q_t *p) { // return -1 if q is empty
 	int pid;
-	if(EmptyQ(p)) return -1;////////try Empty(&p)
+	if(p->size ==0){
+    printf("Queue is empty\n");
+    return -1;////////try Empty(&p)
+   }
+
 	pid = p->q[p->head];
-	p->head +=1;
-	if(p->head >= Q_SIZE) p->head=0;
-	p->size -= 1;
+	p->head++;
+
+	if(p->head == Q_SIZE) p->head=0;
+	p->size--;
 	return pid;	
 }
 

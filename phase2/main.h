@@ -4,7 +4,6 @@
 #define _MAIN_H_
 
 int main();
-void InitIDT();
 void InitData();
 void SelectCRP();
 void Kernel();
