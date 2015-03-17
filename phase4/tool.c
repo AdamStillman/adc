@@ -22,7 +22,6 @@ void initq(q_t *q){
 
 void MyBzero(char *p, int size) {//trying changing char to Q_t
 
-
 int i;
 for(i=0; i<size; i++){
 	*p++ = '\0';
