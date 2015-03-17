@@ -21,16 +21,7 @@ void initq(q_t *q){
 
 
 void MyBzero(char *p, int size) {//trying changing char to Q_t
-/*
-  int i;
-	q->size = 0;
-	q->head = 0;
-	q->tail = 0;
-  for(i = 0; i < MAX_PROC; i++) {
-    p[i] = '\0'; 
-  } 
-  while(size--) *p++ = (char)0;   
-*/
+
 
 int i;
 for(i=0; i<size; i++){
