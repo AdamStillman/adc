@@ -59,13 +59,13 @@ void InitData() {
 	MyBzero((char *) &run_q, sizeof(q_t) );
 	MyBzero((char *) &none_q, sizeof(q_t));
 	MyBzero((char *) &sleep_q, sizeof(q_t));
-  MyBzero((char *) &semaphore_q, sizeof(q_t)); //clears the semaphore queue
+	MyBzero((char *) &semaphore_q, sizeof(q_t)); //clears the semaphore queue
 
 	//set CRP to 0
  	for(i=1; i<Q_SIZE; i++){//thats correct
 		pcb[i].state = NONE; //set state to NONE in pcb[1~19]
 		EnQ(i, &none_q );// queue PID's 1~19 (skip 0) into none_q (not used PID's)	 
-    EnQ(i, &semaphore_q );
+		EnQ(i, &semaphore_q );
 	}
 
 
