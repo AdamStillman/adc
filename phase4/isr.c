@@ -134,7 +134,7 @@ void SemGetISR(){
 	MyBzero((char *) &semaphore_q, sizeof(q_t));
 	
 	semaphore[sid].count = count;
-	
+	if(semaphore[sid].count == -1) semaphore[sid].count=0;
 	//set count from ebx to semaphore count
 	pcb[CRP].TF_ptr->ebx= sid;
 	
