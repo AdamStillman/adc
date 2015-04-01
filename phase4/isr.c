@@ -151,5 +151,6 @@ if(semaphore[print_semaphore].wait_q.size > 0){
 	EnQ(pid, &run_q);
 	pcb[pid].state = RUN;
 }
+if(semaphore[print_semaphore].wait_q.size == 0) semaphore[print_semaphore].count++;
 
 }
