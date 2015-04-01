@@ -125,18 +125,18 @@ void SemPostISR(){
 
 void SemGetISR(){
 	//count in ebx
-	int count = pcb[CRP].TF_ptr->ecx;
+	int count = pcb[CRP].TF_ptr->ebx;
 
 	//allocate semaphore id
 	int sid = DeQ(&semaphore_q );//semaphore_q
 
 	//mybzero wait q
-	MyBzero((char *) &semaphore_q, sizeof(q_t));
+	MyBzero((char *) &semaphore_q[sid], sizeof(q_t));
 	
 	semaphore[sid].count = count;
 	if(semaphore[sid].count == -1) semaphore[sid].count=0;
 	//set count from ebx to semaphore count
-	pcb[CRP].TF_ptr->ebx= sid;
+	pcb[CRP].TF_ptr->ecx= sid;
 	
 	//return semaphore id
 	//syscall returns to print driver
