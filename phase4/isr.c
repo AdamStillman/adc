@@ -131,7 +131,7 @@ void SemGetISR(){
 	int sid = DeQ(&semaphore_q );//semaphore_q
 
 	//mybzero wait q
-	MyBzero((char *) &semaphore_q[sid], sizeof(q_t));
+	MyBzero((char *) &semaphore[sid], sizeof(semaphore_t));
 	
 	semaphore[sid].count = count;
 	if(semaphore[sid].count == -1) semaphore[sid].count=0;
