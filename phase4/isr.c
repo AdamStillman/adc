@@ -129,12 +129,13 @@ void SemGetISR(){
 	
 	//allocate semaphore id
 	int sid = DeQ(&semaphore_q);//semaphore_q
-	if(sid==-1) sid=0;
+	if(sid >=0){ 
+	
 	semaphore[sid].count = count;
 	
 	//mybzero wait q
 	MyBzero((char *) &semaphore[sid], sizeof(semaphore_t));
-	
+	}
 
 //	if(semaphore[sid].count < 0) semaphore[sid].count=0;
 	//set count from ebx to semaphore count
