@@ -64,7 +64,7 @@ int i, code;
 char str[] = "Hello, my Team is called TSLK \n\0";
 char *p;
 //int TIME_OUT=3*1666000;                   // time out in 3 sec
-print_semaphore = SemGet(0);//should be -1 but depends on IRQISR
+print_semaphore = SemGet(-1);//should be -1 but depends on IRQISR
 
 outportb(LPT1_BASE+LPT_CONTROL, PC_SLCTIN);// printer control select interrup
 code = inportb(LPT1_BASE+LPT_STATUS);
