@@ -148,22 +148,17 @@ void SemGetISR(){
 
 void IRQ7ISR(){
 int pid;
-int pid2;
+
 outportb(0x20, 0x67);
 
-if(semaphore[print_semaphore].wait_q.size > 0) {
+if(semaphore[print_semaphore].wait_q.size > 0) semaphore[print_semaphore].count++;
+else{
 	pid = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(pid, &run_q);
 	pcb[pid].state = RUN;	
 }
-outportb(0x20, 0x67);
-if(semaphore[print_semaphore].wait_q.size==0)semaphore[print_semaphore].count++;
-else{
-	pid2 = DeQ(&(semaphore[print_semaphore].wait_q));
-	EnQ(pid2, &run_q);
-	pcb[pid2].state = RUN;	
-}
 
 }
+
 
 
