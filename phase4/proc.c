@@ -43,7 +43,7 @@ while(1){
 	cons_printf("my pid is: %d: \n", GetPid() );
 	Sleep(1);
 	if(print_it ==1){
-		p = str;
+		p = str+1;
 		while(*p){
 			outportb(LPT1_BASE+LPT_DATA, *p);      // send char to data reg
 			code = inportb(LPT1_BASE+LPT_CONTROL); // read control reg
