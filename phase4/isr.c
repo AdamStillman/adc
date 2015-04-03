@@ -134,7 +134,7 @@ void SemGetISR(){
 	semaphore[sid].count = count;
 	
 	//mybzero wait q
-	MyBzero((char *) &semaphore[sid], sizeof(semaphore_t));
+	MyBzero((char *)&semaphore[sid], sizeof(semaphore_t));
 	}
 
 //	if(semaphore[sid].count < 0) semaphore[sid].count=0;
@@ -148,14 +148,24 @@ void SemGetISR(){
 
 void IRQ7ISR(){
 int pid;
+int pid2;
 outportb(0x20, 0x67);
 
-if(semaphore[print_semaphore].wait_q.size <= 0) semaphore[print_semaphore].count++;
+if(semaphore[print_semaphore].wait_q.size > 0) 
 else{
 	pid = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(pid, &run_q);
 	pcb[pid].state = RUN;	
 }
+outportb(0x20, 0x67);
+if(semaphore[pint_semaphore].wait_q.size==0)semaphore[print_semaphore].count++;
+else{
+	pid2 = DeQ(&(semaphore[print_semaphore].wait_q));
+	EnQ(pid2, &run_q);
+	pcb[pid2].state = RUN;	
+}
+}	
 
+}
 
 }
