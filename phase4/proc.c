@@ -26,39 +26,7 @@ void UserProc() {
 		Sleep(sleep);
 	}
 }
-/*
-void Producer(){
-  int i;
-  int pid, sec;
-  pid = GetPid();
-  while(1){
-    sec = 4 - (pid%4);
-//    SemWait(product_semaphore); //sem-wait product semaphore
-    cons_printf("Proc %d is producing...",pid); //show msg: "Proc (pid #) is producing ..."
-//    product += 100; //increment product by 100
-    cons_printf("+++ product is now %d \n", product); //show msg: "+++ product is now (product #) \n"
-//    SemPost(product_semaphore); //sem-post product semaphore
-    for(i=0;i<1666000; i++) IO_DELAY(); //IO_DELAY() for a second
-    Sleep(sec);
-  }
-}
 
-void Consumer() {
-  int i;
-  int pid, sec;
-  pid = GetPid();
-  while (1){
-    sec = 4 - (pid%4);
-//    SemWait(product_semaphore); //sem-wait product semaphore
-    cons_printf("Proc %d is consuming...", pid); //show msg: "Proc (pid #) is consuming..."
-    product -= 100; //decrement product by 100
-    cons_printf("--- product is now %d \n", product);//show msg: "--- product is now (product #)\n"
-//    SemPost(product_semaphore);//sem-post product semaphore
-    for(i=0; i<1666000; i++) IO_DELAY();//IO_DELAY() for a second
-    Sleep(sec);
-  }
-}
-*/
 void PrintDriver(){
 int i, code;
 char str[] = "Hello, my Team is called TSLK \n\0";
