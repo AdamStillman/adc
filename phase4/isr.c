@@ -157,7 +157,7 @@ if(semaphore[print_semaphore].wait_q.size > 0) {
 	pcb[pid].state = RUN;	
 }
 outportb(0x20, 0x67);
-if(semaphore[pint_semaphore].wait_q.size==0)semaphore[print_semaphore].count++;
+if(semaphore[print_semaphore].wait_q.size==0)semaphore[print_semaphore].count++;
 else{
 	pid2 = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(pid2, &run_q);
