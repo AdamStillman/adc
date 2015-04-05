@@ -21,6 +21,7 @@ void CreateISR(int pid) {
 	
 	//added code
 	MyBZero(stack[pid], STACK_SIZE); //erase stack
+
 	
 	pcb[pid].TF_ptr = (TF_t *)&stack[pid][STACK_SIZE];
 	pcb[pid].TF_ptr--;
@@ -30,6 +31,9 @@ void CreateISR(int pid) {
 	//	cons_printf("in idle\n");
 	}
 	else if(pid==1){
+		pcb[pid].TF_ptr->eip = (unsigned int) Init;
+	}
+	else if(pid==2){
 		pcb[pid].TF_ptr->eip = (unsigned int) PrintDriver;
 	}
 	else pcb[pid].TF_ptr->eip = (unsigned int) UserProc;
