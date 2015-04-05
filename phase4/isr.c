@@ -126,22 +126,11 @@ void SemPostISR(){
 void SemGetISR(){
 	//count in ebx
 	int count = pcb[CRP].TF_ptr->ebx;
-	
-	//allocate semaphore id
 	int sid = DeQ(&semaphore_q);//semaphore_q
-	if(sid >=0){ 
-	//mybzero wait q
 	MyBzero((char *)&semaphore[sid], sizeof(semaphore_t));
-	
 	semaphore[sid].count = count;
-	}
-
-//	if(semaphore[sid].count < 0) semaphore[sid].count=0;
-	//set count from ebx to semaphore count
 	pcb[CRP].TF_ptr->ecx= sid;
-	
-	//return semaphore id
-	//syscall returns to print driver
+
 
 }
 
@@ -150,7 +139,7 @@ void IRQ7ISR(){
 int temp;
 outportb(0x20, 0x67);
 //pid = pcb[CRP].TF_ptr->ebx;
-if(semaphore[print_semaphore].wait_q.size < 0) semaphore[print_semaphore].count++;
+if(semaphore[print_semaphore].wait_q.size == 0) semaphore[print_semaphore].count++;
 else{
 	temp = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(temp, &run_q);
