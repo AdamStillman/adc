@@ -127,10 +127,11 @@ void SemGetISR(){
 	//count in ebx
 	int count = pcb[CRP].TF_ptr->ebx;
 	int sid = DeQ(&semaphore_q);//semaphore_q
+	if(sid>=0){
 	MyBzero((char *)&semaphore[sid], sizeof(semaphore_t));
 	semaphore[sid].count = count;
 	pcb[CRP].TF_ptr->ecx= sid;
-
+	}
 
 }
 
