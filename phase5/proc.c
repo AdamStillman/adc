@@ -62,6 +62,29 @@ while(1){
 }//print driver
 
 void Init(){
+      int pid;
+      char key;
+      ...
+      msg_t msg;       // local, in process space
+      ...
+      use MyStrcpy() to put greeting message (to be printed) into the msg
+      ...
+     while(;;){// infinite loop:
+     		pid=GetPid();
+         	cons_printf("%d ", pid);		// print 0 on PC            show my PID
+		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
+        
+        if(cons_kbhit()){		//check if key hit
+		key = cons_getchar();
+		switch(key){
+		//phase5
+		case 'p': {
+			//call msgsnd9addr of msg
+		}break;
+		case 'b':breakpoint(); break;
+		case 'q': exit(0);
+		}
+	}
 
 
 
