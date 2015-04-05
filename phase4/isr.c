@@ -150,7 +150,7 @@ void IRQ7ISR(){
 int temp;
 outportb(0x20, 0x67);
 //pid = pcb[CRP].TF_ptr->ebx;
-if(semaphore[print_semaphore].wait_q.size == 0) semaphore[print_semaphore].count++;
+if(semaphore[print_semaphore].wait_q.size < 0) semaphore[print_semaphore].count++;
 else{
 	temp = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(temp, &run_q);
