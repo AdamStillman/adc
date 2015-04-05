@@ -51,7 +51,7 @@ while(1){
 			for(i=0; i<20; i++) IO_DELAY();        // delay for EPSON LP-571 printer
 			outportb(LPT1_BASE+LPT_CONTROL, code); // send original control code
 			SemWait(print_semaphore);
-			*p++;
+			p++;
 		}//while p
 	}// if print
 	print_it=0;
