@@ -61,4 +61,8 @@ while(1){
 
 }//print driver
 
+void Init(){
 
+
+
+}//init
