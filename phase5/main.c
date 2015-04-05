@@ -26,6 +26,10 @@ int print_semaphore;
 //int product_semaphore;//phase3 to be removed
 q_t semaphore_q;
 
+//phase5
+mbox_t mbox;
+
+
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
 	struct i386_gate *gateptr = &IDT_ptr[entry_num];
 	//cons_printf("in set enty\n");	
@@ -51,8 +55,7 @@ void InitData() {
 	int i;
   sys_time = 0;
 	CRP = 0;
-//cons_printf("initializng data\n");
-    //initialize 2 queues (use MyBzero() call)
+    //initialize queues (use MyBzero() call)
 	initq(&run_q);
 	initq(&none_q);
 	initq(&sleep_q);
@@ -60,7 +63,7 @@ void InitData() {
 	MyBzero((char *) &none_q, sizeof(q_t));
 	MyBzero((char *) &sleep_q, sizeof(q_t));
 	MyBzero((char *) &semaphore_q, sizeof(q_t)); //clears the semaphore queue
-
+	
 	//set CRP to 0
  	for(i=1; i<Q_SIZE; i++){//thats correct
 		pcb[i].state = NONE; //set state to NONE in pcb[1~19]
@@ -68,13 +71,8 @@ void InitData() {
 		EnQ(i, &semaphore_q );
 	}
 
-
-  //product_semaphore = DeQ(&semaphore_q);
   MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
-//  semaphore[product_semaphore].count = 1;
- // product = 0;
 
-	//cons_printf("done init data\n");
 
 //phase4
 print_it=0;
