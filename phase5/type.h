@@ -37,4 +37,27 @@ typedef struct //Used for semaphores
   q_t wait_q;
 } semaphore_t;
 
+typedef struct 
+{
+  int sender,
+  recipient,
+  time_stamp;
+  char data[101];
+} msg_t;
+
+typedef struct
+{
+  msg_t msg[Q_SIZE];
+  int head, tail, size;
+} msg_q_t;
+
+typedef struct
+{
+  msg_g_t msg_q;
+  q_t wait_q;
+} mbox_t;
+
+
+
+
 #endif _TYPE_H_
