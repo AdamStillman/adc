@@ -35,6 +35,8 @@ extern void SemWaitEntry();
 extern void SemPostEntry();
 extern void SemGetEntry();
 extern void IRQ7Entry();
+extern void MsgSendEntry();
+extern void MsgRecieveEntry();
 __END_DECLS
 
 #endif
