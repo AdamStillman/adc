@@ -31,29 +31,25 @@ typedef struct {             // proc queue type
 
 typedef void (* func_ptr_t)(); // void-returning function pointer type
 
-typedef struct //Used for semaphores
-{
+typedef struct{ //Used for semaphores
   int count;
   q_t wait_q;
 } semaphore_t;
 
-typedef struct 
-{
+typedef struct {
   int sender,
   recipient,
   time_stamp;
   char data[101];
 } msg_t;
 
-typedef struct
-{
+typedef struct{
   msg_t msg[Q_SIZE];
   int head, tail, size;
 } msg_q_t;
 
-typedef struct
-{
-  msg_g_t msg_q;
+typedef struct{
+  msg_q_t msg_q;
   q_t wait_q;
 } mbox_t;
 
