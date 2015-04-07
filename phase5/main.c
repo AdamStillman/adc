@@ -172,26 +172,19 @@ void Kernel(TF_t *TF_ptr) {
 		break;
 	
 	}
-/*
-//cons_printf("just before if statement\n");     
+
 if(cons_kbhit()){
 	key = cons_getchar();
 	switch(key){
-		//phase4
-		case 'p': print_it=1; break;		
 		case 'n':
 			if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
 			else {
 				pid = DeQ(&none_q);
-//				printf("the pid is: %d \n", pid); 
 				CreateISR(pid);
 			}
 	   		break;	
-		case 't':TerminateISR(); break;
-		case 'b':breakpoint(); break;
-		case 'q': exit(0); 
 	}		
-}  */
+} 
 //   call SelectCRP() to settle/determine for next CRP
 	SelectCRP();
 
