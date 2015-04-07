@@ -8,7 +8,7 @@ void Sleep(int);   // 1 input, no return
 void SemWait(int);
 void SemPost(int);
 int SemGet(int);
-void MsgSend();
-void MsgRecieve();
+void MsgSend(msg_t);
+void MsgRecieve(msg_t);
 
 #endif
