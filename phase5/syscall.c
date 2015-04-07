@@ -37,5 +37,18 @@ int SemGet(int count) {
 		: "%ebx", "%ecx" ); // push/pop before/after asm()
   return sid;
 }
+//phase 5
+int MsgSend(msg_t *msg) {
+	asm("movl %0, %%ebx; int $53;" // CPU inst
+		:
+		: "g" (int)(msg)
+		: "%ebx"); // push/pop before/after asm()
+}
 
+int MsgRecieve(msg_t *msg) {
+	asm("movl %0, %%ebx; int $54;" // CPU inst
+		:
+		: "g" (int)(msg)
+		: "%ebx"); // push/pop before/after asm()
+}
 
