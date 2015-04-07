@@ -155,23 +155,35 @@ else{
 }
 
 void MsgSendISR(){
-	int mid;
+	int pid;
 	msg_t *local_msg;
-	local_msg = (msg_t *) pcb[CRP].TF_ptr ->ebx;
+	local_msg = (msg_t *) pcb[CRP].TF_ptr->ebx;
 	
-	if( !Emptyq(&mbox[CRP].wait_q) ){
-		mbox[CRP].msg_q.msg.sender = CRP;
-		mbox[CRP].msg_q.msg.time_stamp = sys_time;
-		MsgEnQ()
+	if( Emptyq(&mbox[CRP].wait_q) ){
+		local_msg->sender = CRP;
+		local_msg->time_stamp = sys_time;
+		MsgEnQ(local_msg, &mbox[CRP].msg_q);
+	}
+	else{
+		pid = DeQ(&mbox[CRP].wait_q);
+		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
+		pcb[pid].state = RUN;
+		EnQ = (pid, &run_q);
 	}
 	
 	
 }
 
 void MsgRecieveISR(){
-	msg_t local_msg;	
+	int pid;
+	msg_t *local_msg;	
 	
-	
+	if( Emptyq(&mbox[CRP].wait_q) ) EnQ(CRP, &mbox[CRP].wait_q);//clock crp
+	else{
+		local_msg= MsgDeQ(&mbox[CRP].msg_q);
+		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
+	}
+		
 }
 
 
