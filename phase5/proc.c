@@ -31,6 +31,7 @@ void PrintDriver(){
 int i, code;
 char str[] = "Hello, my Team is called TSLK \n\0";
 char *p;
+msg_t *local_msg;
 //int TIME_OUT=3*1666000;                   // time out in 3 sec
 print_semaphore = SemGet(-1);//should be -1 but depends on IRQISR
 
@@ -42,8 +43,8 @@ Sleep(1);
 while(1){
 	cons_printf("my pid is: %d: \n", GetPid() );
 	Sleep(1);
-	if(print_it ==1){
-		p = str;
+	MsgRecieve(&local_msg);
+		p = local_msg;
 		while(*p){
 			outportb(LPT1_BASE+LPT_DATA, *p);      // send char to data reg
 			code = inportb(LPT1_BASE+LPT_CONTROL); // read control reg
@@ -53,8 +54,6 @@ while(1){
 			SemWait(print_semaphore);
 			p++;
 		}//while p
-	}// if print
-	print_it=0;
 }//while1
 
 
@@ -62,14 +61,14 @@ while(1){
 }//print driver
 
 void Init(){
-      int pid;
-      char key;
-      ...
-      msg_t msg;       // local, in process space
-      ...
-      use MyStrcpy() to put greeting message (to be printed) into the msg
-      ...
-     while(;;){// infinite loop:
+	int pid;
+	char key;
+	char my_msg[] = "Hello, my Team is called TSLK \n\0";
+	msg_t *msg;       // local, in process space
+
+	MyStrcpy(msg, my_msg); //to put greeting message (to be printed) into the msg
+
+	while(;;){// infinite loop:
      		pid=GetPid();
          	cons_printf("%d ", pid);		// print 0 on PC            show my PID
 		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
@@ -78,14 +77,10 @@ void Init(){
 		key = cons_getchar();
 		switch(key){
 		//phase5
-		case 'p': {
-			//call msgsnd9addr of msg
-		}break;
+		case 'p':MsgSend(&msg); break;
 		case 'b':breakpoint(); break;
 		case 'q': exit(0);
 		}
 	}
-
-
 
 }//init
