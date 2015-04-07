@@ -159,8 +159,10 @@ void MsgSendISR(){
 	msg_t *local_msg;
 	local_msg = (msg_t *) pcb[CRP].TF_ptr ->ebx;
 	
-	if(mbox[CRP].wait_q){
-		
+	if( !Emptyq(&mbox[CRP].wait_q) ){
+		mbox[CRP].msg_q.msg.sender = CRP;
+		mbox[CRP].msg_q.msg.time_stamp = sys_time;
+		MsgEnQ()
 	}
 	
 	
