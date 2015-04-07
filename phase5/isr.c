@@ -22,7 +22,7 @@ void CreateISR(int pid) {
 	//added code
 	MyBZero(stack[pid], STACK_SIZE); //erase stack
 	//phase5
-	MyBZero(*mbox[pid], sizeof( mbox_t)); //clear the mbox
+	MyBZero(&mbox[pid], sizeof( mbox_t)); //clear the mbox
 
 	
 	pcb[pid].TF_ptr = (TF_t *)&stack[pid][STACK_SIZE];
@@ -159,7 +159,7 @@ void MsgSendISR(){
 	msg_t *local_msg;
 	local_msg = (msg_t *) pcb[CRP].TF_ptr->ebx;
 	
-	if( Emptyq(*mbox[CRP].wait_q) ){
+	if( Emptyq(&mbox[CRP].wait_q) ){
 		local_msg->sender = CRP;
 		local_msg->time_stamp = sys_time;
 		MsgEnQ(*local_msg, &mbox[CRP].msg_q);
