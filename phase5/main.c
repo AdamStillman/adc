@@ -91,6 +91,8 @@ void InitIDT(){
   	SetEntry(51, SemPostEntry);
   	SetEntry(52, SemGetEntry);
   	SetEntry(39, IRQ7Entry);
+  	SetEntry(53, MsgSendEntry);
+  	SetEntry(54, MsgRecieveEntry);
   	outportb(0x21, ~129); //pic mask to open irq7?
 
 }
@@ -157,6 +159,11 @@ void Kernel(TF_t *TF_ptr) {
       SemGetISR(); break;
     case IRQ7_INTR:
       IRQ7ISR(); break;
+   //phase5
+    case MsgSend_INTR:
+      MsgSendIRS(); break;
+    case MsgRecieve_INTR:
+      MsgRecieveIRS(); break;
 
     
 		default: 
@@ -165,7 +172,7 @@ void Kernel(TF_t *TF_ptr) {
 		break;
 	
 	}
-
+/*
 //cons_printf("just before if statement\n");     
 if(cons_kbhit()){
 	key = cons_getchar();
@@ -184,7 +191,7 @@ if(cons_kbhit()){
 		case 'b':breakpoint(); break;
 		case 'q': exit(0); 
 	}		
-}  
+}  */
 //   call SelectCRP() to settle/determine for next CRP
 	SelectCRP();
 
