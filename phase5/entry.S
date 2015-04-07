@@ -51,6 +51,14 @@ ENTRY(IRQ7Entry)
    pushl $IRQ7_INTR
    jmp IntoKernel
 
+ENTRY(MsgSendEntry)
+   pushl $MSGSND_INTR
+   jmp IntoKernel
+   
+ENTRY(MsgRecieveEntry)
+   pushl $MSGRCV_INTR
+   jmp IntoKernel
+   
 // Common IRQ entry, save context and call Kmain()
 IntoKernel:
    pusha
