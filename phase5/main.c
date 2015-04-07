@@ -27,7 +27,7 @@ int print_semaphore;
 q_t semaphore_q;
 
 //phase5
-mbox_t mbox[NUM_POC];
+mbox_t mbox[MAX_POC];
 
 
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
