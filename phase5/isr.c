@@ -21,6 +21,8 @@ void CreateISR(int pid) {
 	
 	//added code
 	MyBZero(stack[pid], STACK_SIZE); //erase stack
+	
+	MyBZero(msg[pid], sizeof( msg_t)); //erase stack
 
 	
 	pcb[pid].TF_ptr = (TF_t *)&stack[pid][STACK_SIZE];
