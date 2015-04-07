@@ -14,6 +14,6 @@ extern int print_semaphore;
 extern int print_it, semaphoreID;
 extern semaphore_t semaphore[MAX_PROC];
 extern q_t semaphore_q;
-extern mbox_t mbox[MAX_POC];
+extern mbox_t mbox[MAX_PROC];
 
 #endif
