@@ -151,10 +151,21 @@ else{
 	temp = DeQ(&(semaphore[print_semaphore].wait_q));
 	EnQ(temp, &run_q);
 	pcb[temp].state = RUN;
+    }
 }
 
-
+void MsgSendISR(){
+	int mid;
+	msg_t *local_msg;
+	local_msg = (msg_t)pcb[CRP].TF_ptr ->ebx;
+	
+	
 }
 
+void MsgRecieveISR(){
+	msg_t local_msg;	
+	
+	
+}
 
 
