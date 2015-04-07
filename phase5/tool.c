@@ -76,3 +76,44 @@ int DeQ(q_t *p) { // return -1 if q is empty
 	return pid;	
 }
 
+void MsgEnQ(msg_t *p, msg_q_t *q);{
+	if(q->size==MAX_PROC){
+		cons_printf("msg q is emtpy \n" );
+		return -1;
+	}
+	else{
+		q->msg[q->tail] = p;
+		q->tail++;
+		if(q->tail >= Q_SIZE) q->tail=0;
+		q->size++;
+	}
+	
+	
+}
+
+msg_t *MsgDeQ(msg_q_t *p) { // return -1 if q is empty
+	msg_t *msg;
+	if(p->size ==0){
+    printf("Queue is empty\n");
+    return -1;////////try Empty(&p)
+   }
+
+	msg = p->msg[p->head];
+	p->head++;
+
+	if(p->head == Q_SIZE) p->head=0;
+	p->size--;
+	return msg;	
+}
+
+void MyStrCpy(char *dest, char *src){
+	char *p;
+	int a=0;
+
+	for(p=src; p!='\0'; p++){
+		dest[a]=p;
+		a++;
+	}
+	
+	dest[a]='\0';
+}
