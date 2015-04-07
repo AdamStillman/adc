@@ -13,7 +13,7 @@ void EnQ(int, q_t *);
 void initq(q_t *);
 void EnQMsg(msg_t *, msg_q_t *);
 msg_t *DeQMsg(msg_q_t *);
-MyStrcpy(char *dest, char *src);
+void MyStrcpy(char *dest, char *src);
 
 #endif
 
