@@ -157,7 +157,7 @@ else{
 void MsgSendISR(){
 	int mid;
 	msg_t *local_msg;
-	local_msg = (msg_t*) pcb[CRP].TF_ptr ->ebx;
+	local_msg = (msg_t *) pcb[CRP].TF_ptr ->ebx;
 	
 	if(mbox[CRP].wait_q){
 		
