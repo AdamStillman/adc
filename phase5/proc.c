@@ -61,7 +61,7 @@ while(1){
 }//print driver
 
 void Init(){
-	int pid;
+	int pid, a;
 	char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
 	msg_t *msg;       // local, in process space
