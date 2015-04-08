@@ -27,7 +27,7 @@ int print_semaphore;
 q_t semaphore_q;
 
 //phase5
-mbox_t mbox[MAX_POC];
+mbox_t mbox[MAX_PROC];
 
 
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
@@ -160,9 +160,9 @@ void Kernel(TF_t *TF_ptr) {
     case IRQ7_INTR:
       IRQ7ISR(); break;
    //phase5
-    case MsgSend_INTR:
+    case MSGSND_INTR:
       MsgSendIRS(); break;
-    case MsgRecieve_INTR:
+    case MSGRCV_INTR:
       MsgRecieveIRS(); break;
 
     
