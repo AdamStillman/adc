@@ -43,7 +43,7 @@ Sleep(1);
 while(1){
 	cons_printf("my pid is: %d: \n", GetPid() );
 	Sleep(1);
-	MsgRecieve(&local_msg);
+	MsgRecieve(*local_msg);
 		p = local_msg;
 		while(*p){
 			outportb(LPT1_BASE+LPT_DATA, *p);      // send char to data reg
