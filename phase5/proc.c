@@ -29,7 +29,6 @@ void UserProc() {
 
 void PrintDriver(){
 int i, code;
-char str[] = "Hello, my Team is called TSLK \n\0";
 char *p;
 msg_t local_msg;
 //int TIME_OUT=3*1666000;                   // time out in 3 sec
