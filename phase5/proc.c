@@ -6,6 +6,7 @@
 #include "proc.h"    // for Idle, SimpleProc, DispatchProc
 #include "syscall.h"
 #include <spede/machine/parallel.h>
+#include "tool.h"
 
 void Idle() {
 	int i =0;
