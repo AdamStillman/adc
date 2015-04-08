@@ -168,7 +168,7 @@ void MsgSendISR(){
 		pid = DeQ(&mbox[CRP].wait_q);
 		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
 		pcb[pid].state = RUN;
-		EnQ = (pid, &run_q);
+		EnQ(pid, &run_q);
 	}
 	
 	
