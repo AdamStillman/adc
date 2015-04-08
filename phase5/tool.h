@@ -11,7 +11,7 @@ void MyBZero(void *, int);
 int DeQ(q_t *);
 void EnQ(int, q_t *);
 void initq(q_t *);
-void EnQMsg(msg_t *, msg_q_t *);
+void MsgEnQ(msg_t *, msg_q_t *);
 msg_t *DeQMsg(msg_q_t *);
 void MyStrcpy(char *dest, char *src);
 
