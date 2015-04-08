@@ -162,7 +162,7 @@ void MsgSendISR(){
 	if( EmptyQ(&mbox[CRP].wait_q) ){
 		local_msg->sender = CRP;
 		local_msg->time_stamp = sys_time;
-		MsgEnQ(&local_msg, &mbox[CRP].msg_q);
+		MsgEnQ(local_msg, &mbox[CRP].msg_q);
 	}
 	else{
 		pid = DeQ(&mbox[CRP].wait_q);
