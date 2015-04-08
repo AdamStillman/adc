@@ -75,12 +75,13 @@ void Init(){
         
         if(cons_kbhit()){		//check if key hit
 		key = cons_getchar();
-		switch(key){
-		//phase5
-		case 'p':MsgSend(&msg); break;
-		case 'b':breakpoint(); break;
-		case 'q': exit(0);
+			switch(key){
+			//phase5
+			case 'p':MsgSend(&msg); break;
+			case 'b':breakpoint(); break;
+			case 'q': exit(0);
+			}
 		}
-	}
 
-}//init
+	}//while
+}
