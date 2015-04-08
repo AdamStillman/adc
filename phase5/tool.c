@@ -66,7 +66,7 @@ int DeQ(q_t *p) { // return -1 if q is empty
 	return pid;	
 }
 
-void MsgEnQ(msg_t *p, msg_q_t *q);{
+void MsgEnQ(msg_t *p, msg_q_t *q){
 	if(q->size==MAX_PROC){
 		cons_printf("msg q is emtpy \n" );
 		return -1;
@@ -81,7 +81,7 @@ void MsgEnQ(msg_t *p, msg_q_t *q);{
 	
 }
 
-msg_t *MsgDeQ(msg_q_t *p) { // return -1 if q is empty
+msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 	msg_t *msg;
 	if(p->size ==0){
     printf("Queue is empty\n");
