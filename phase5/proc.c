@@ -64,11 +64,11 @@ void Init(){
 	int pid, a;
 	char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
-	msg_t *msg;       // local, in process space
+	msg_t msg;       // local, in process space
 
 	MyStrcpy(msg, my_msg); //to put greeting message (to be printed) into the msg
 
-	while(;;){// infinite loop:
+	while(1){// infinite loop:
      		pid=GetPid();
          	cons_printf("%d ", pid);		// print 0 on PC            show my PID
 		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
