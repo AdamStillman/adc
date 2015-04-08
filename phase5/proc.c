@@ -31,7 +31,7 @@ void PrintDriver(){
 int i, code;
 char str[] = "Hello, my Team is called TSLK \n\0";
 char *p;
-msg_t *local_msg;
+msg_t local_msg;
 //int TIME_OUT=3*1666000;                   // time out in 3 sec
 print_semaphore = SemGet(-1);//should be -1 but depends on IRQISR
 
@@ -43,8 +43,8 @@ Sleep(1);
 while(1){
 	cons_printf("my pid is: %d: \n", GetPid() );
 	Sleep(1);
-	MsgRecieve(*local_msg);
-		p = local_msg;
+	MsgRecieve(&local_msg);
+		p = local_msg.data;
 		while(*p){
 			outportb(LPT1_BASE+LPT_DATA, *p);      // send char to data reg
 			code = inportb(LPT1_BASE+LPT_CONTROL); // read control reg
