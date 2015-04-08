@@ -22,7 +22,7 @@ void CreateISR(int pid) {
 	//added code
 	MyBZero(stack[pid], STACK_SIZE); //erase stack
 	//phase5
-	MyBZero((void *)mbox[pid], sizeof(mbox_t)); //clear the mbox
+	MyBZero( &mbox[pid], sizeof(mbox_t)); //clear the mbox
 
 	
 	pcb[pid].TF_ptr = (TF_t *)&stack[pid][STACK_SIZE];
