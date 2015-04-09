@@ -69,7 +69,7 @@ int DeQ(q_t *p) { // return -1 if q is empty
 void MsgEnQ(msg_t *p, msg_q_t *q){
 	if(q->size==MAX_PROC){
 		cons_printf("msg q is emtpy \n" );
-		return 0;
+		return;
 	}
 	else{
 		q->msg[q->tail] = *p;
@@ -101,7 +101,7 @@ void MyStrCpy(char *dest, char *src){
 	int a=0;
 
 	for(p=src; p!='\0'; p++){
-		dest[a]=p;
+		dest[a]=*p;
 		a++;
 	}
 	
