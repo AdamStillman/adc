@@ -77,7 +77,7 @@ breakpoint();
 		key = cons_getchar();
 			switch(key){
 			//phase5
-			case 'p':MsgSend(&msg); break;
+			case 'p':MsgSend(&msg); breakpoint(); break;
 			case 'b':breakpoint(); break;
 			case 'q': exit(0);
 			}
