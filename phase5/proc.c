@@ -67,7 +67,7 @@ void Init(){
 	msg_t msg;       // local, in process space
 
 	MyStrCpy(msg.data, my_msg); //to put greeting message (to be printed) into the msg
-
+breakpoint();
 	while(1){// infinite loop:
      		pid=GetPid();
          	cons_printf("%d ", pid);		// print 0 on PC            show my PID
