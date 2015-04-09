@@ -69,7 +69,7 @@ int DeQ(q_t *p) { // return -1 if q is empty
 void MsgEnQ(msg_t *p, msg_q_t *q){
 	if(q->size==MAX_PROC){
 		cons_printf("msg q is emtpy \n" );
-		return -1;
+		return;
 	}
 	else{
 		q->msg[q->tail] = p;
@@ -84,8 +84,8 @@ void MsgEnQ(msg_t *p, msg_q_t *q){
 msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 	msg_t *msg;
 	if(p->size ==0){
-    printf("Queue is empty\n");
-    return -1;////////try Empty(&p)
+    cons_printf("Queue is empty\n");
+    return ;////////try Empty(&p)
    }
 
 	msg = p->msg[p->head];
