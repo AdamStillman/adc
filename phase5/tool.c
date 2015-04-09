@@ -85,7 +85,7 @@ msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 	msg_t *msg;
 	if(p->size ==0){
     cons_printf("Queue is empty\n");
-    return ;////////try Empty(&p)
+    return -1;////////try Empty(&p)
    }
 
 	msg = p->msg[p->head];
