@@ -20,7 +20,6 @@ char stack[MAX_PROC][STACK_SIZE]; // run-time stacks for processes
 struct i386_gate *IDT_ptr;
 
 semaphore_t semaphore[MAX_PROC];
-int print_it;
 int print_semaphore;
 //int product; //phase3 to be removed
 //int product_semaphore;//phase3 to be removed
@@ -72,11 +71,6 @@ void InitData() {
 	}
 
   MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
-
-
-//phase4
-print_it=0;
-
 
 }
 //new code
