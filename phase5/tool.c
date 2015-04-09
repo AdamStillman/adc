@@ -39,7 +39,7 @@ for (i = 0; i < n; i++) {
 void EnQ(int pid, q_t *p) {
 
 	if(FullQ(p) ){
-		cons_printf("Que is full!\n");	
+		cons_printf("Que is full! in enq\n");	
 		return;
 	}
 
@@ -54,7 +54,7 @@ void EnQ(int pid, q_t *p) {
 int DeQ(q_t *p) { // return -1 if q is empty
 	int pid;
 	if(p->size ==0){
-    printf("Queue is empty\n");
+    printf("Queue is empty in deq\n");
     return -1;////////try Empty(&p)
    }
 
@@ -68,7 +68,7 @@ int DeQ(q_t *p) { // return -1 if q is empty
 
 void MsgEnQ(msg_t *p, msg_q_t *q){
 	if(q->size==MAX_PROC){
-		cons_printf("msg q is emtpy \n" );
+		cons_printf("msg q is emtpy ing msgenq \n" );
 		return;
 	}
 	else{
@@ -84,7 +84,7 @@ void MsgEnQ(msg_t *p, msg_q_t *q){
 msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 	msg_t *msg;
 	if(p->size ==0){
-    cons_printf("Queue is empty\n");
+    cons_printf("Queue is empty in msgdeq\n");
     return 0;////////try Empty(&p)
    }
 
