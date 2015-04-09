@@ -156,13 +156,13 @@ else{
 
 void MsgSendISR(){
 	int pid;
-	msg_t local_msg;
+	msg_t *local_msg;
 	local_msg = (msg_t *) pcb[CRP].TF_ptr->ebx;
 	
 	if( EmptyQ(&mbox[local_msg.recipient].wait_q) ){
-		local_msg.sender = CRP;
-		local_msg.time_stamp = sys_time;
-		MsgEnQ(&local_msg, &mbox[local_msg.recipient].msg_q);
+		local_msg->sender = CRP;
+		local_msg->time_stamp = sys_time;
+		MsgEnQ(local_msg, &mbox[local_msg.recipient].msg_q);
 	}
 	else{
 		pid = DeQ(&mbox[local_msg.recipient].wait_q);
