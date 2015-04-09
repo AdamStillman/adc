@@ -176,12 +176,12 @@ void MsgSendISR(){
 
 void MsgRecieveISR(){
 	int pid;
-	msg_t local_msg;	
+	msg_t *local_msg;	
 	
 	if( EmptyQ(&mbox[CRP].wait_q) ) EnQ(CRP, &mbox[CRP].wait_q);//clock crp
 	else{
 		local_msg= MsgDeQ(&mbox[CRP].msg_q);
-		(msg_t *)pcb[pid].TF_ptr->ebx = *local_msg;
+		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
 	}
 		
 }
