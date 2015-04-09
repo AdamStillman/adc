@@ -97,13 +97,19 @@ msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 }
 
 void MyStrCpy(char *dest, char *src){
-	char *p;
+	/*char *p;
 	int a=0;
 
 	for(p=src; p!='\0'; p++){
-		dest[a]=*p;
+		*dest=*p;
 		a++;
 	}
 	
-	dest[a]='\0';
-}
+	dest[a]='\0';  */
+   while (*src) {
+      *dest = *src;
+      source++;
+      dest++;
+   }
+   *dest = '\0';
+}	
