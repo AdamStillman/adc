@@ -100,7 +100,7 @@ void MyStrCpy(char *dest, char *src){
 	char *p;
 	int a=0;
 
-	for(p=*src; p!='\0'; p++){
+	for(p=src; p!='\0'; p++){
 		dest[a]=*p;
 		a++;
 	}
