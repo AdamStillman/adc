@@ -72,7 +72,7 @@ void MsgEnQ(msg_t *p, msg_q_t *q){
 		return;
 	}
 	else{
-		q->msg[q->tail] = &p;
+		q->msg[q->tail] = *p;
 		q->tail++;
 		if(q->tail >= Q_SIZE) q->tail=0;
 		q->size++;
