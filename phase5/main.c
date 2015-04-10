@@ -43,12 +43,6 @@ int pid;
 	InitIDT();
   cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 
-	
-	pid = DeQ(&none_q);
-	CreateISR(pid);
-
-	pid = DeQ(&none_q);
-	CreateISR(pid);
 
 	Dispatch(pcb[0].TF_ptr);
 
@@ -82,6 +76,12 @@ void InitData() {
 	}
 
   MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
+	
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+
+	pid = DeQ(&none_q);
+	CreateISR(pid);
 
 }
 //new code
