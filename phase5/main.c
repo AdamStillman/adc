@@ -123,6 +123,16 @@ void SelectCRP() {       // pick PID as CRP
 void Kernel(TF_t *TF_ptr) {
 	
    int pid;
+   int x=0;
+	if(x<2){
+		pid = DeQ(&none_q);
+		CreateISR(pid);
+		x++;
+	}
+
+   
+   
+   
 //   char key;
    
 //   change state of CRP to kernel mode
@@ -167,13 +177,7 @@ void Kernel(TF_t *TF_ptr) {
 	
 	}
 	
-for(int x=0; x<2;x++){
-if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
-			else {
-				pid = DeQ(&none_q);
-				CreateISR(pid);
-			}
-}/*
+/*
 if(cons_kbhit()){
 	key = cons_getchar();
 	switch(key){
