@@ -41,7 +41,7 @@ for(i=0; i<50; i++) IO_DELAY();
 outportb(LPT1_BASE+LPT_CONTROL, PC_INIT|PC_SLCTIN|PC_IRQEN);
 Sleep(1);
 while(1){
-	cons_printf("my pid is: %d: \n", GetPid() );
+	cons_printf("my pint pid is: %d: \n", GetPid() );
 	Sleep(1);
 	MsgRecieve(&local_msg);
 		p = local_msg.data;
@@ -67,7 +67,6 @@ void Init(){
 	msg_t msg;       // local, in process space
 
 	MyStrCpy(msg.data, my_msg); //to put greeting message (to be printed) into the msg
-breakpoint();
 	while(1){// infinite loop:
      		pid=GetPid();
          	cons_printf("%d ", pid);		// print 0 on PC            show my PID
