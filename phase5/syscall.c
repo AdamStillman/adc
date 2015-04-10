@@ -41,7 +41,7 @@ int SemGet(int count) {
 void MsgSend(int r, msg_t *msg) {
 	asm("movl %0, %%eax; movl %1, %%ebx; int $53;" // CPU inst
 		:
-		: "g" (r) "g" (msg)
+		: "g" (r), "g" (msg)
 		: "%ebx", "%ebx"); // push/pop before/after asm()
 }
 
