@@ -28,6 +28,7 @@ q_t semaphore_q;
 //phase5
 mbox_t mbox[MAX_PROC];
 
+char key;
 
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
 	struct i386_gate *gateptr = &IDT_ptr[entry_num];
@@ -123,7 +124,7 @@ void SelectCRP() {       // pick PID as CRP
 void Kernel(TF_t *TF_ptr) {
 	
    int pid;
-   char key;
+   //char key;
    
 //   change state of CRP to kernel mode
 	pcb[CRP].mode = KMODE;
