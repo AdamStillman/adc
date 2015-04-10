@@ -37,6 +37,7 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 }
 
 int main() {
+	int pid;
 	InitData(); // to initialize kernel data
 	InitIDT();
 	CreateISR(0); //to create Idle process (PID 0)
@@ -54,7 +55,7 @@ int main() {
 
 
 void InitData() {
-	int i, pid;
+	int i;
   sys_time = 0;
 	CRP = 0;
     //initialize queues (use MyBzero() call)
