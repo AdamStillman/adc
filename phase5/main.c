@@ -38,11 +38,13 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 
 int main() {
 	InitData(); // to initialize kernel data
-	CreateISR(0); //to create Idle process (PID 0)
 	InitIDT();
-  cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
-
-
+	CreateISR(0); //to create Idle process (PID 0)
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	//cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 
    return 0;
@@ -73,11 +75,6 @@ void InitData() {
 
   MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
 	
-	pid = DeQ(&none_q);
-	CreateISR(pid);
-
-	pid = DeQ(&none_q);
-	CreateISR(pid);
 
 }
 //new code
