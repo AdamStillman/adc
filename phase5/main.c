@@ -123,7 +123,7 @@ void SelectCRP() {       // pick PID as CRP
 void Kernel(TF_t *TF_ptr) {
 	
    int pid;
-   char key;
+//   char key;
    
 //   change state of CRP to kernel mode
 	pcb[CRP].mode = KMODE;
@@ -166,7 +166,7 @@ void Kernel(TF_t *TF_ptr) {
 		break;
 	
 	}
-int x=0;	
+int x;	
 for(x=0; x<2;x++){
 if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
 			else {
