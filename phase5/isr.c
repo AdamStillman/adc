@@ -156,7 +156,7 @@ else{
 
 void MsgSendISR(){
 	int pid, recipient;
-	msg_t souce, destination;
+	msg_t source;
 	source = *(msg_t *)pcb[CRP].TF_ptr->ebx;
 	recipient=pcb[CRP].TF_ptr->eax;
 	source.recipient=recipient;
