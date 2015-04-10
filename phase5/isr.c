@@ -179,11 +179,11 @@ void MsgRecieveISR(){
 	msg_t *local_msg;	
 	
 	//if( EmptyQ(&mbox[CRP].wait_q) ){
-	if( &mbox[CRP].wait_q==0){
+	if( mbox[CRP].wait_q==0){
 	EnQ(CRP, &mbox[CRP].wait_q);//clock crp
 	}
 	else{
-		local_msg= MsgDeQ(&mbox[CRP].msg_q);
+		local_msg= MsgDeQ(mbox[CRP].msg_q);
 		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
 	}
 		
