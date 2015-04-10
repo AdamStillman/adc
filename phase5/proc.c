@@ -62,7 +62,7 @@ while(1){
 
 void Init(){
 	int pid, a;
-	//char key;
+	char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
 	msg_t msg;       // local, in process space
 
