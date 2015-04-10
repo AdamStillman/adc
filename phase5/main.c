@@ -122,13 +122,6 @@ void SelectCRP() {       // pick PID as CRP
 
 void Kernel(TF_t *TF_ptr) {
 	
-   int pid;
-   int x=0;
-	if(x<2){
-		pid = DeQ(&none_q);
-		CreateISR(pid);
-		x++;
-	}
 
    
    
@@ -191,9 +184,21 @@ if(cons_kbhit()){
 	}		
 } */
 //   call SelectCRP() to settle/determine for next CRP
+   int pid;
+   int x=0;
+	if(x<2){
+		pid = DeQ(&none_q);
+		CreateISR(pid);
+		x++;
 	SelectCRP();
 
 	Dispatch(pcb[CRP].TF_ptr);
+
+	}
+
+//	SelectCRP();
+
+//	Dispatch(pcb[CRP].TF_ptr);
 
 }
 
