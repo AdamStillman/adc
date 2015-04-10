@@ -62,7 +62,7 @@ while(1){
 
 void Init(){
 	int pid, a;
-	char key;
+	//char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
 	msg_t msg;       // local, in process space
 
@@ -74,7 +74,7 @@ breakpoint();
 		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
         
         if(cons_kbhit()){		//check if key hit
-		key = cons_getchar();
+		//key = cons_getchar();
 			switch(key){
 			//phase5
 			case 'p':MsgSend(&msg);  break;
