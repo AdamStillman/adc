@@ -166,7 +166,14 @@ void Kernel(TF_t *TF_ptr) {
 		break;
 	
 	}
-
+int x=0;	
+for(x=0; x<2;x++){
+if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
+			else {
+				pid = DeQ(&none_q);
+				CreateISR(pid);
+			}
+}/*
 if(cons_kbhit()){
 	key = cons_getchar();
 	switch(key){
@@ -178,7 +185,7 @@ if(cons_kbhit()){
 			}
 	   		break;	
 	}		
-} 
+} */
 //   call SelectCRP() to settle/determine for next CRP
 	SelectCRP();
 
