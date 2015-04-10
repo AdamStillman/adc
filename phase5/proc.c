@@ -65,7 +65,7 @@ void Init(){
 	char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
 	msg_t msg;       // local, in process space
-
+	msg.recipient=2;
 	MyStrCpy(msg.data, my_msg); //to put greeting message (to be printed) into the msg
 	while(1){// infinite loop:
      		pid=GetPid();
