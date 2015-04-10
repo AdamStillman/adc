@@ -178,7 +178,8 @@ void MsgRecieveISR(){
 	int pid;
 	msg_t *local_msg;	
 	
-	if( EmptyQ(&mbox[CRP].wait_q) ){
+	//if( EmptyQ(&mbox[CRP].wait_q) ){
+	if( &mbox[CRP].wait_q==0){
 	EnQ(CRP, &mbox[CRP].wait_q);//clock crp
 	}
 	else{
