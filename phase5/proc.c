@@ -73,7 +73,7 @@ void Init(){
 		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
         
         if(cons_kbhit()){		//check if key hit
-		//key = cons_getchar();
+		key = cons_getchar();
 			switch(key){
 			//phase5
 			case 'p':MsgSend(&msg);  break;
