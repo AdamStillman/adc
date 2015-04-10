@@ -37,18 +37,19 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 }
 
 int main() {
-
+int pid;
 	InitData(); // to initialize kernel data
 	CreateISR(0); //to create Idle process (PID 0)
 	InitIDT();
   cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 	
-	//pid = DeQ(&none_q);
-	CreateISR(1);
-	Dispatch(pcb[1].TF_ptr);
-	CreateISR(2);
-	Dispatch(pcb[2].TF_ptr);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+
 		
 	
    return 0;
