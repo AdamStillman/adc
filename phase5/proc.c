@@ -76,7 +76,7 @@ void Init(){
 		key = cons_getchar();
 			switch(key){
 			//phase5
-			case 'p':MsgSend(&msg);  break;
+			case 'p':MsgSend(2, &msg);  break;
 			case 'b':breakpoint(); break;
 			case 'q': exit(0);
 			}
