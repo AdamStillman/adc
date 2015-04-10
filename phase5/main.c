@@ -37,13 +37,20 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 }
 
 int main() {
-	
+   int pid;
+   int x=0;	
+
 	InitData(); // to initialize kernel data
 	CreateISR(0); //to create Idle process (PID 0)
 	InitIDT();
   cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 	
+	if(x<2){
+		pid = DeQ(&none_q);
+		CreateISR(pid);
+		x++;
+	}
    return 0;
 }
 
@@ -121,12 +128,7 @@ void SelectCRP() {       // pick PID as CRP
 }
 
 void Kernel(TF_t *TF_ptr) {
-   int pid;
-   int x=0;	
 
-   
-   
-   
 //   char key;
    
 //   change state of CRP to kernel mode
@@ -186,19 +188,10 @@ if(cons_kbhit()){
 } */
 //   call SelectCRP() to settle/determine for next CRP
 
-	if(x<2){
-		pid = DeQ(&none_q);
-		CreateISR(pid);
-		x++;
+
 	SelectCRP();
 
 	Dispatch(pcb[CRP].TF_ptr);
-
-	}
-
-//	SelectCRP();
-
-//	Dispatch(pcb[CRP].TF_ptr);
 
 }
 
