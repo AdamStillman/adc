@@ -46,7 +46,9 @@ int main() {
 	
 	//pid = DeQ(&none_q);
 	CreateISR(1);
+	Dispatch(pcb[1].TF_ptr);
 	CreateISR(2);
+	Dispatch(pcb[2].TF_ptr);
 		
 	
    return 0;
