@@ -67,22 +67,24 @@ int DeQ(q_t *p) { // return -1 if q is empty
 }
 
 void MsgEnQ(msg_t *p, msg_q_t *q){
-	if(q->size==MAX_PROC){
-		cons_printf("msg q is emtpy ing msgenq \n" );
-		return;
+	if(q->size < Q_SIZE){
+		q->size++;
+		MyStrCpy((char*) &q->msg[q->tail], (char*) sizeof(msg_t));
+		if(q->tail >= Q_SIZE) q->tail = 0;
+		else{
+		q->tail++;
+		}
 	}
 	else{
-		q->msg[q->tail] = *p;
-		q->tail++;
-		if(q->tail >= Q_SIZE) q->tail=0;
-		q->size++;
+		cons_printf("MsgEnQ passed full queue");
 	}
 	
 	
 }
 
 msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
-	msg_t *msg;
+	msg_t* msg;
+/*
 	if(p->size ==0){
     cons_printf("Queue is empty in msgdeq\n");
     return 0;////////try Empty(&p)
@@ -93,7 +95,25 @@ msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 
 	if(p->head == Q_SIZE) p->head=0;
 	p->size--;
+*/
+	if(p->size > 0)
+	{
+		p->size--;
+		msg = &p->msg[p->head];
+		if(p->head == Q_SIZE){
+			p->head = 0;
+		} else {
+			p->head++;
+		}
+	}
+	else
+	{
+		msg = 0;
+		cons_printf("Empty queue passed to MsgDeQ");
+	}
+
 	return msg;	
+
 }
 
 void MyStrCpy(char *dest, char *src){
@@ -106,7 +126,7 @@ void MyStrCpy(char *dest, char *src){
 	}
 	
 	dest[a]='\0';  */
-   while (*src) {
+   while (*src != '\0') {
       *dest = *src;
       src++;
       dest++;

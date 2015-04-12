@@ -38,17 +38,17 @@ int SemGet(int count) {
   return sid;
 }
 //phase 5
-void MsgSend(int r, msg_t *msg) {
-	asm("movl %0, %%eax; movl %1, %%ebx; int $53;" // CPU inst
+void MsgSnd( msg_t *msg) {
+	asm("movl %0, %%ebx; int $53;" // CPU inst
 		:
-		: "g" (r), "g" (msg)
-		: "%ebx", "%ebx"); // push/pop before/after asm()
+		:  "g" ((int)msg)
+		:  "%ebx"); // push/pop before/after asm()
 }
 
-void MsgRecieve(msg_t *msg) {
+void MsgRcv(msg_t *msg) {
 	asm("movl %0, %%ebx; int $54;" // CPU inst
 		:
-		: "g" (msg)
+		: "g" ((int)msg)
 		: "%ebx"); // push/pop before/after asm()
 }
 

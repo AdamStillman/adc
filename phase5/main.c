@@ -90,8 +90,8 @@ void InitIDT(){
   	SetEntry(51, SemPostEntry);
   	SetEntry(52, SemGetEntry);
   	SetEntry(39, IRQ7Entry);
-  	SetEntry(53, MsgSendEntry);
-  	SetEntry(54, MsgRecieveEntry);
+  	SetEntry(53, MsgSndEntry);
+  	SetEntry(54, MsgRcvEntry);
   	outportb(0x21, ~129); //pic mask to open irq7?
 
 }
@@ -159,9 +159,9 @@ void Kernel(TF_t *TF_ptr) {
       IRQ7ISR(); break;
    //phase5
     case MSGSND_INTR:
-      MsgSendISR(); break;
+      MsgSndISR(); break;
     case MSGRCV_INTR:
-      MsgRecieveISR(); break;
+      MsgRcvISR(); break;
 
     
 		default: 
