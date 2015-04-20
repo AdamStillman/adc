@@ -84,3 +84,45 @@ void Init(){
 
 	}//while
 }
+
+void shell () {
+   int BAUD_RATE, divisor;         // for serial port
+   msg_t msg;                      // local message space
+   char login[101], password[101]; // login and password strings entered
+   int STDIN = 4, STDOUT = 5;      // PID's of these processes
+
+  // 1st initialize terminal interface data structure (below)
+  // then initialize serial port (below)
+
+   //infinite loop:
+   
+      //loop A:
+        /// prompt valid commands (send msg to STDOUT, receive reply)
+       //  prompt for login (send msg to STDOUT, receive reply)
+       //  get login entered (send msg to STDIN, receive reply)
+       //  prompt for password (same as above)
+       //  get password entered (same as above)
+        // string-compare login and password; if same, break loop A
+       //  (else) prompt "Invalid login!\n\0"
+   //   repeat loop A
+   //   loop B:
+     //    prompt for entering command string
+   //      get command string entered
+      //   if command string is empty {
+     //       continue (loop B)
+     //    }
+    //     if command string is "bye" {
+     //       break (loop B)
+    //     }
+     //    if command string is "whoami" {
+       //     show login string,
+       //     and an additional "\n\0" (for aesthetics)
+      //      continue (loop B)
+    //     }
+   //      other strings {
+   //         show "Command not found!\n\0"
+   //      }
+    //  repeat loop B
+ //  repeat infinite loop
+// }
+// }
