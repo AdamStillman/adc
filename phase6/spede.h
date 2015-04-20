@@ -14,6 +14,7 @@
 #include <spede/machine/seg.h> // struct i386_gate, fill_gate(), etc.
 #include <spede/machine/asmacros.h> // ASM(), CNAME(), ENTRY(), etc.
 #include <spede/machine/parallel.h>
+#include <spede/machine/rs232.h> //phase 6
 
 // #include <spede/machine/pic.h> // IRQ_VECTOR(), IRQ_TIMER, IRQ_COM1, ICU0_IOBASE, SPECIFIC_EOI(), etc.
 // #include <spede/stdlib.h> // TRUE, FALSE, NULL, etc.
