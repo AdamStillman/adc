@@ -11,7 +11,7 @@ void SemWaitISR();
 void SemPostISR();
 void SemGetISR();
 void IRQ7ISR();
-void MsgSendISR();
-void MsgRecieveISR();
+void MsgSndISR();
+void MsgRcvISR();
 
 #endif

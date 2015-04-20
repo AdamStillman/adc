@@ -51,11 +51,11 @@ ENTRY(IRQ7Entry)
    pushl $IRQ7_INTR
    jmp IntoKernel
 
-ENTRY(MsgSendEntry)
+ENTRY(MsgSndEntry)
    pushl $MSGSND_INTR
    jmp IntoKernel
    
-ENTRY(MsgRecieveEntry)
+ENTRY(MsgRcvEntry)
    pushl $MSGRCV_INTR
    jmp IntoKernel
    
