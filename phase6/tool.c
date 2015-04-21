@@ -97,15 +97,7 @@ msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 }
 
 void MyStrCpy(char *dest, char *src){
-	/*char *p;
-	int a=0;
 
-	for(p=src; p!='\0'; p++){
-		*dest=*p;
-		a++;
-	}
-	
-	dest[a]='\0';  */
    while (*src) {
       *dest = *src;
       src++;
@@ -113,3 +105,15 @@ void MyStrCpy(char *dest, char *src){
    }
    *dest = '\0';
 }	
+
+int MyStrCmp(char *s1, char *s2){
+	while(*s1 && *s2){
+		if(*s1 == *s2){
+			s1++;
+			s2++;
+		}
+		else return 0;
+		if(*s1 != *s2) return 0;
+		return 1;
+	}
+}
