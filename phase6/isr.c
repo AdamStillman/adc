@@ -193,10 +193,10 @@ void MsgRecieveISR(){
 
 void IRQ3TX(){
 	char ch = 0;
-	if(!EmptyQ(terminal.echo_q)) ch = DeQ(terminal.echo_q);
+	if(!EmptyQ(terminal.echo_q)) ch = DeQ(&terminal.echo_q);
 	else{
 		if(!EmptyQ(terminal.TX_q)){
-			ch = DeQ(terminal.TX_q);
+			ch = DeQ(&terminal.TX_q);
 			SemPostISR(terminal.TX_sem);
 		}
 		
@@ -213,14 +213,14 @@ void IRQ3TX(){
 void IRQ3RX(){
 	char ch;
 	ch = inportb(COM2_IOBASE+DATA) & 0x7F;
-	EnQ((int)ch, terminal.RX_q);
+	EnQ((int)ch, &terminal.RX_q);
 	SemPostISR(terminal.RX_sem);
 	if(ch == '\r'){
-		 EnQ((int)'\r', terminal.echo_q);
-		 EnQ((int)'\n', terminal.echo_q);
+		 EnQ((int)'\r', &terminal.echo_q);
+		 EnQ((int)'\n', &terminal.echo_q);
 	}
 	else{
-		if(terminal.echo_q==1) EnQ((int)ch, terminal.echo);
+		if(terminal.echo_q==1) EnQ((int)ch, &terminal.echo);
 	}
 }
 
