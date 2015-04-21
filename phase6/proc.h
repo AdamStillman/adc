@@ -8,4 +8,6 @@ void Idle();
 void UserProc();
 void PrintDriver();
 void Init();
+void STDIN();
+void STDOUT();
 #endif
