@@ -150,7 +150,7 @@ void Kernel(TF_t *TF_ptr) {
       SemWaitISR();//stage 5 had CRP when i dont think it needed it
       break;
     case SEMPOST_INTR:
-      SemPostISR(sem);//stage 5 had CRP, now it needs something  dont think its sem
+      SemPostISR(CRP);//stage 5 had CRP, now it needs something  dont think its sem
       break;
    //phase4
     case SEMGET_INTR:
