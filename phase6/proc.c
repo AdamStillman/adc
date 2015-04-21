@@ -94,11 +94,11 @@ void shell () {
   // 1st initialize terminal interface data structure (below)
   // then initialize serial port (below)
 
-   //infinite loop:
-   
-      //loop A:
-        /// prompt valid commands (send msg to STDOUT, receive reply)
-       //  prompt for login (send msg to STDOUT, receive reply)
+//	while(1){
+   //
+     // looopa:
+      /// prompt valid commands (send msg to STDOUT, receive reply)
+	//  prompt for login (send msg to STDOUT, receive reply)
        //  get login entered (send msg to STDIN, receive reply)
        //  prompt for password (same as above)
        //  get password entered (same as above)
@@ -124,5 +124,5 @@ void shell () {
    //      }
     //  repeat loop B
  //  repeat infinite loop
-  }
-}
+  }//loopb
+}//wile1
