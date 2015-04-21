@@ -136,7 +136,7 @@ msg_t msg;
 		*p=msg.data;
 		while(1){
 			SemWait(terminal.RX_sem);
-			ch = DeQ(RX_q);
+			ch = (char)DeQ(terminal.RX_q);
 			if(ch=='\r') break;
 			*p++ = ch;
 		}
@@ -148,7 +148,23 @@ msg_t msg;
 }
 	
 void STDOUT(){
-	
-	
+char *p;
+msg_t msg;
+	while(1){
+		MsgRecieve(&msg);
+		*p = msg.data;
+		while(1){
+			SemWait(terminal.TX_sem);
+			EnQ((int) p, terminal.TX_q);
+			TipIRQ3();
+			if(*p=='\n'){
+				SemWait(terminal.TX_sem);
+				EnQ('\r', terminal.TX_q);
+			}		
+		p++
+		}
+	msg.recipient = msg.sender;
+	MsgSend(&msg);
+	}
 	
 }
