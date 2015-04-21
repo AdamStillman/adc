@@ -28,6 +28,8 @@ q_t semaphore_q;
 //phase5
 mbox_t mbox[MAX_PROC];
 
+terminal_t terminal;
+
 
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
 	struct i386_gate *gateptr = &IDT_ptr[entry_num];
