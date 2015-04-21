@@ -126,3 +126,24 @@ void shell () {
  //  repeat infinite loop
   }//loopb
 }//wile1
+
+
+void STDIN(){
+cha *p, ch;
+msg_t msg;
+	while(1){
+		MsgRecieve(&msg);
+		*p=msg.data;
+		while(1){
+			SemWait(terminal.RX_sem);
+			ch = DeQ(RX_q);
+			if(ch=='\r') break;
+			*p++ = ch;
+		}
+		*p = '\0';
+		msg.recipient = msg.sender;
+		MsgSend(&msg);
+	}
+
+}
+	
