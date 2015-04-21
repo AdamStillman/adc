@@ -209,3 +209,17 @@ void IRQ3TX(){
 	}
 	
 }
+
+void IRQ3RX(){
+	char ch;
+	ch = inportb(COM2_IOBASE+DATA) & 0x7F;
+	EnQ((int)ch, terminal.RX_q);
+	SemPostISR(terminal.RX_sem);
+	if(ch == '\r'){
+		 EnQ((int)'\r', terminal.echo_q);
+		 EnQ((int)'\n', terminal.echo_q);
+	}
+	else{
+		if(terminal.echo_q==1) EnQ((int)ch, terminal.echo);
+	}
+}
