@@ -135,7 +135,7 @@ void shell () {
      while(1){ // loop a
      
       // prompt valid commands (send msg to STDOUT, receive reply)
-      MyStrCpy(msg.data, "Whoami and bye");
+      MyStrCpy(msg.data, "whoami, bye");
        MsgSnd(STDOUT, &msg);
        MsgRcv(&msg);
       
@@ -180,21 +180,29 @@ void shell () {
      MsgRcv(&msg);
      //   if command string is empty, then continue (loop B)
       if(MyStrlen(msg.data) == 0) continue;
-      else {
-    	if(MyStrcmp(msg.data, "bye\0")) break;//if command string is "bye", then break (loop B)
+      else if(MyStrcmp(msg.data, "bye\0")) break; //if command string is "bye", then break (loop B)
+      else if (MyStrcmp(msg.data, "whoami\0")) { //if command string is "whoami"
+       //show login string,
+       MyStrCpy(msg.data,login);
+       MsgSnd(STDOUT, &msg);
+       MsgRcv(&msg);
+       
+       //and an additional "\n\0" (for aesthetics)
+       MyStrCpy(msg.data, "\n\0");
+       MsgSnd(STDOUT, &msg);
+       MsgRcv(&msg);
+       continue; // continue (loop B)
+      } //if command string is "whoami" (end)
+      else { //else other strings are entered in command string
+   	//show "Command not found!\n\0"
+   	MyStrCpy(msg.data, "Command not found!\n\0");
+   	MsgSnd(STDOUT, &msg);
+   	MsgRcv(&msg);
       }
-     //    if command string is "whoami" {
-       //     show login string,
-       //     and an additional "\n\0" (for aesthetics)
-      //      continue (loop B)
-    //     }
-   //      other strings {
-   //         show "Command not found!\n\0"
      }// if command string is empty block (end)
    }//  repeat loop B
 } //  repeat infinite loop
    
-}
 
 
 void STDIN(){
