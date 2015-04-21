@@ -92,7 +92,8 @@ void InitIDT(){
   	SetEntry(39, IRQ7Entry);
   	SetEntry(53, MsgSendEntry);
   	SetEntry(54, MsgRecieveEntry);
-  	outportb(0x21, ~129); //pic mask to open irq7?
+  	SetEntry(35, IRQ3Entry);
+  	outportb(0x21, ~128+8+1); //pic mask to open irq7?
 
 }
 
