@@ -117,3 +117,12 @@ int MyStrCmp(char *s1, char *s2){
 		return 1;
 	}
 }
+
+int MyStrLen( char *s){
+	int count;
+	while(*s!='\0'){
+		count++;
+		s++;
+	}
+	return count;
+}
