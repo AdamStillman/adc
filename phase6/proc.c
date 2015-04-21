@@ -84,7 +84,7 @@ void Init(){
 
 	}//while
 }
-
+/*------------------------------Phase 6 -----------------------------------------------------*/
 void shell () {
    int BAUD_RATE, divisor;         // for serial port
    msg_t msg;                      // local message space
