@@ -191,3 +191,21 @@ void MsgRecieveISR(){
 }
 
 
+void IRQ3TX(){
+	char ch = 0;
+	if(!EmptyQ(terminal.echo_q)) ch = DeQ(terminal.echo_q);
+	else{
+		if(!EmptyQ(terminal.TX_q)){
+			ch = DeQ(terminal.TX_q);
+			SemPostISR(terminal.TX_sem);
+		}
+		
+	}
+
+	if(ch == 0) terminal.TX_extra = 1;
+	else{
+		outportb(COM2_IOBASE+DATA,0);
+		terminal.TX_extra = 0;
+	}
+	
+}
