@@ -14,7 +14,7 @@
 #define IRQ7_INTR 39
 #define MSGSND_INTR 53
 #define MSGRCV_INTR 54
-
+#define IRQ3_INTR 35
 
 #define KCODE 0x08    // kernel's code segment
 #define KDATA 0x10    // kernel's data segment
