@@ -52,3 +52,12 @@ void MsgRecieve(msg_t *msg) {
 		: "%ebx"); // push/pop before/after asm()
 }
 
+void TipIRQ3(){
+	asm("int $35;"
+	:
+	:
+	: );
+}
+	
+
+
