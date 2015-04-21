@@ -232,7 +232,7 @@ void IRQ3ISR(){//phase6
 	switch(event) {
          case IIR_TXRDY:// (send char to terminal video)
          	IRQ3TX();
-         	break();
+         	break;
          case IIR_RXRDY://(get char from terminal KB)
          	IRQ3RX();
          	break; 
