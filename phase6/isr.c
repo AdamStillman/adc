@@ -117,12 +117,12 @@ void SemWaitISR(){
   }
 }
 
-void SemPostISR(){
-   int semaphoreID = pcb[CRP].TF_ptr->ebx;
-   if(semaphore[semaphoreID].wait_q.size == 0){
-     semaphore[semaphoreID].count++;
+void SemPostISR(int sem){
+   //int semaphoreID = pcb[CRP].TF_ptr->ebx;
+   if(semaphore[sem].wait_q.size == 0){
+     semaphore[sem].count++;
    } else {
-     int temp = DeQ(&(semaphore[semaphoreID].wait_q));
+     int temp = DeQ(&(semaphore[sem].wait_q));
      EnQ(temp, &run_q);				
      pcb[temp].state = RUN;     
 
