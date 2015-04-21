@@ -147,3 +147,8 @@ msg_t msg;
 
 }
 	
+void STDOUT(){
+	
+	
+	
+}
