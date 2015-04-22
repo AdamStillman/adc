@@ -38,7 +38,7 @@ void CreateISR(int pid) {
 	else if(pid==2){
 		pcb[pid].TF_ptr->eip = (unsigned int)PrintDriver;
 	}
-	else if(pid==3){
+/*	else if(pid==3){
 		pcb[pid].TF_ptr->eip = (unsigned int)shell;
 	}
 	else if(pid==4){
@@ -46,7 +46,7 @@ void CreateISR(int pid) {
 	}
 	else if(pid==5){
 		pcb[pid].TF_ptr->eip = (unsigned int)STDOUT;
-	}
+	}*/
 	else pcb[pid].TF_ptr->eip = (unsigned int)UserProc;
 
 		//fillout trapframe of new proc
