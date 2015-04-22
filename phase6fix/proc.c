@@ -226,9 +226,10 @@ msg_t msg;
 		p=msg.data;
 		while(1){
 			SemWait(terminal.RX_sem);
-			ch = (char)DeQ(&terminal.RX_q);
+			ch = DeQ(&terminal.RX_q);
 			if(ch=='\r') break;
-			*p++ = ch;
+			*p = ch;
+			p++;
 		}
 		*p = '\0';
 		msg.recipient = msg.sender;
@@ -249,6 +250,7 @@ msg_t msg;
 			TipIRQ3();
 			if(*p=='\n'){
 				SemWait(terminal.TX_sem);
+				*p='\r';
 				EnQ(*p, &terminal.TX_q);
 			}		
 		p++;
