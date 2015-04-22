@@ -39,14 +39,14 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 }
 
 int main() {
-	int pid1, pid2;
+	int pid;
 	InitData(); // to initialize kernel data
-	CreateISR(0); //to create Idle process (PID 0)
-	pid1 = DeQ(&none_q);
-	CreateISR(pid1);
-	pid2 = DeQ(&none_q);
-	CreateISR(pid2);
 	InitIDT();
+	CreateISR(0); //to create Idle process (PID 0)
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
 	//cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 
@@ -100,7 +100,7 @@ void InitIDT(){
   	SetEntry(53, MsgSendEntry);
   	SetEntry(54, MsgRecieveEntry);
   	SetEntry(35, IRQ3Entry);
-  	outportb(0x21, ~128+8+1); //pic mask to open irq7?
+  	outportb(0x21, (~128+8+1)); //pic mask to open irq7?
 
 }
 
@@ -170,6 +170,8 @@ void Kernel(TF_t *TF_ptr) {
       MsgSendISR(); break;
     case MSGRCV_INTR:
       MsgRecieveISR(); break;
+    case IRQ3_INTR:
+      IRQ3ISR(); break;
 
     
 		default: 
