@@ -136,26 +136,26 @@ void shell () {
      
       // prompt valid commands (send msg to STDOUT, receive reply)
       MyStrCpy(msg.data, "whoami, bye");
-       MsgSend(STDOUT, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
       
        //  prompt for login (send msg to STDOUT, receive reply)
        MyStrCpy(msg.data, "login: ");
-       MsgSend(STDOUT, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
        
        //  get login entered (send msg to STDIN, receive reply)
-	MsgSend(STDIN, &msg);
+	MsgSend(&msg);
 	MsgRecieve(&msg);
 	MyStrCpy(login, msg.data);
 	
        //  prompt for password (same as above)
        MyStrCpy(msg.data, "password: ");
-       MsgSend(STDOUT, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
        
        //  get password entered (same as above)
-       MsgSend(STDIN, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
        MyStrCpy(password, msg.data);
        
@@ -164,7 +164,7 @@ void shell () {
        
        else {  //(else) prompt "Invalid login!\n\0"
        	MyStrCpy(msg.data, "Invalid login! ");
-       	MsgSend(STDOUT, &msg);
+       	MsgSend(&msg);
        	MsgRecieve(&msg);
        }
        
@@ -172,11 +172,11 @@ void shell () {
      while(1) {//loop B:
      //prompt for entering command string
      MyStrCpy(msg.data, "enter command: "); 
-     MsgSend(STDOUT, &msg);
+     MsgSend(&msg);
      MsgRecieve(&msg);
     
      //get command string entered
-     MsgSend(STDIN, &msg);
+     MsgSend(&msg);
      MsgRecieve(&msg);
      //   if command string is empty, then continue (loop B)
       if(MyStrLen(msg.data) == 0) continue;
@@ -184,19 +184,19 @@ void shell () {
       else if (MyStrCmp(msg.data, "whoami\0")) { //if command string is "whoami"
        //show login string,
        MyStrCpy(msg.data,login);
-       MsgSend(STDOUT, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
        
        //and an additional "\n\0" (for aesthetics)
        MyStrCpy(msg.data, "\n\0");
-       MsgSend(STDOUT, &msg);
+       MsgSend(&msg);
        MsgRecieve(&msg);
        continue; // continue (loop B)
       } //if command string is "whoami" (end)
       else { //else other strings are entered in command string
    	//show "Command not found!\n\0"
    	MyStrCpy(msg.data, "Command not found!\n\0");
-   	MsgSend(STDOUT, &msg);
+   	MsgSend(&msg);
    	MsgRecieve(&msg);
       }
      }// if command string is empty block (end)
