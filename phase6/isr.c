@@ -193,7 +193,7 @@ void MsgRecieveISR(){
 
 void IRQ3TX(){
 	char ch = 0;
-	if(!EmptyQ(terminal.echo_q)) ch = DeQ(&terminal.echo_q);
+	if(!EmptyQ(&terminal.echo_q)) ch = DeQ(&terminal.echo_q);
 	else{
 		if(!EmptyQ(&terminal.TX_q)){
 			ch = DeQ(&terminal.TX_q);
