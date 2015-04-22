@@ -62,9 +62,9 @@ void InitData() {
   sys_time = 0;
 	CRP = 0;
     //initialize queues (use MyBzero() call)
-/*	initq(&run_q);
+	initq(&run_q);
 	initq(&none_q);
-	initq(&sleep_q); */
+	initq(&sleep_q); 
 	
 	MyBzero((char *) &run_q, sizeof(q_t) );
 	MyBzero((char *) &none_q, sizeof(q_t));
@@ -78,7 +78,7 @@ void InitData() {
 		EnQ(i, &semaphore_q );
 	}
 
- // MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
+  MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
 
 //phase6
 		CreateISR(3);
