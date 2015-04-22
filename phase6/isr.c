@@ -38,6 +38,15 @@ void CreateISR(int pid) {
 	else if(pid==2){
 		pcb[pid].TF_ptr->eip = (unsigned int) PrintDriver;
 	}
+	else if(pid==3){
+		pcb[pid].TF_ptr->eip = (unsigned int) Shell;
+	}
+	else if(pid==4){
+		pcb[pid].TF_ptr->eip = (unsigned int) STDIN;
+	}
+	else if(pid==5){
+		pcb[pid].TF_ptr->eip = (unsigned int) STDOUT;
+	}
 	else pcb[pid].TF_ptr->eip = (unsigned int) UserProc;
 
 		//fillout trapframe of new proc
@@ -133,12 +142,11 @@ void SemGetISR(){
 	//count in ebx
 	int count = pcb[CRP].TF_ptr->ebx;
 	int sid = DeQ(&semaphore_q);//semaphore_q
-	if(sid>=0){
-	MyBzero((char *)&semaphore[sid], sizeof(semaphore_t));
-	semaphore[sid].count = count;
-	pcb[CRP].TF_ptr->ecx= sid;
+	if(sid!=-1){
+		MyBzero((char *)&semaphore[sid], sizeof(semaphore_t));
+		semaphore[sid].count = count;
 	}
-
+	pcb[CRP].TF_ptr->ecx= sid;
 }
 
 void IRQ7ISR(){
