@@ -15,5 +15,7 @@ extern int print_it, semaphoreID;
 extern semaphore_t semaphore[MAX_PROC];
 extern q_t semaphore_q;
 extern mbox_t mbox[MAX_PROC];
+//phase6
+extern terminal_t terminal;
 
 #endif
