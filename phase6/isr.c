@@ -39,7 +39,7 @@ void CreateISR(int pid) {
 		pcb[pid].TF_ptr->eip = (unsigned int) PrintDriver;
 	}
 	else if(pid==3){
-		pcb[pid].TF_ptr->eip = (unsigned int) Shell;
+		pcb[pid].TF_ptr->eip = (unsigned int) shell;
 	}
 	else if(pid==4){
 		pcb[pid].TF_ptr->eip = (unsigned int) STDIN;
