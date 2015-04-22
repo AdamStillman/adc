@@ -54,9 +54,9 @@ void MsgRecieve(msg_t *msg) {
 
 void TipIRQ3(){
 	asm("int $35;"
-	:
-	:
-	: );
+		:
+		:
+		: );
 }
 	
 
