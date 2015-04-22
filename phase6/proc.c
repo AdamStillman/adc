@@ -75,7 +75,7 @@ void Init(){
 			switch(key){
 			//phase5
 			case 'p':
-			MsgSnd(&msg); break;
+			MsgSend(&msg); break;
 			case 'b':breakpoint(); break;
 			case 'q': exit(0);
 			}
