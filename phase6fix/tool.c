@@ -69,7 +69,7 @@ int DeQ(q_t *p) { // return -1 if q is empty
 void MsgEnQ(msg_t *p, msg_q_t *q){
 	if(q->size < Q_SIZE){
 		q->size++;
-		q->msg[q->tail] = p;
+		q->msg[q->tail] = *p;
 	//	MyStrCpy((char*) &q->msg[q->tail], (char*) sizeof(msg_t));
 		if(q->tail >= Q_SIZE) q->tail = 0;
 		else{
