@@ -215,7 +215,7 @@ msg_t msg;
 			SemWait(terminal.RX_sem);
 			ch = (char)DeQ(&terminal.RX_q);
 			if(ch=='\r') break;
-			p++ = ch;
+			*p++ = ch;
 		}
 		*p = '\0';
 		msg.recipient = msg.sender;
