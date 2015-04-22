@@ -193,9 +193,9 @@ void MsgRecieveISR(){
 
 void IRQ3TX(){
 	char ch = 0;
-	if(!EmptyQ(terminal.echo_q)) ch = DeQ(terminal.echo_q);
+	if(!EmptyQ(terminal.echo_q)) ch = DeQ(&terminal.echo_q);
 	else{
-		if(!EmptyQ(terminal.TX_q)){
+		if(!EmptyQ(&terminal.TX_q)){
 			ch = DeQ(&terminal.TX_q);
 			SemPostISR(terminal.TX_sem);
 		}
@@ -220,7 +220,7 @@ void IRQ3RX(){
 		 EnQ((int)'\n', &terminal.echo_q);
 	}
 	else{
-		if(terminal.echo_q==1) EnQ((int)ch, &terminal.echo);
+		if(terminal.echo==1) EnQ((int)ch, &terminal.echo_q);
 	}
 }
 
@@ -237,6 +237,6 @@ void IRQ3ISR(){//phase6
          	IRQ3RX();
          	break; 
       }
-      if(terminal.TX_extra==1) IRQTX();
+      if(terminal.TX_extra==1) IRQ3TX();
       
 }
