@@ -238,7 +238,7 @@ char *p;
 msg_t msg;
 	while(1){
 		MsgRecieve(&msg);
-		*p = msg.data;
+		p = msg.data;
 		while(1){
 			SemWait(terminal.TX_sem);
 			EnQ((int) p, &terminal.TX_q);
