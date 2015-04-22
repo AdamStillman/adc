@@ -53,5 +53,5 @@ void MsgRcv(msg_t *msg) {
 }
 
 void TipIRQ3(){
-	asm("int $35;" );//not sure if the semicolon mattes or not
+	asm("int $35" );
 }
