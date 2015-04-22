@@ -239,13 +239,13 @@ msg_t msg;
 	while(1){
 		MsgRecieve(&msg);
 		p = msg.data;
-		while(1){
+		while(*p != '\0'){ //loop A until p points to null
 			SemWait(terminal.TX_sem);
-			EnQ((int) p, &terminal.TX_q);
+			EnQ( *p, &terminal.TX_q);
 			TipIRQ3();
 			if(*p=='\n'){
 				SemWait(terminal.TX_sem);
-				EnQ('\r', &terminal.TX_q);
+				EnQ(*p, &terminal.TX_q);
 			}		
 		p++;
 		}
