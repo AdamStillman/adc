@@ -155,39 +155,36 @@ else{
 }
 
 void MsgSendISR(){
-	int pid, recipient;
-	msg_t source;
-	source = *(msg_t *)pcb[CRP].TF_ptr->ebx;
-	recipient=pcb[CRP].TF_ptr->eax;
-	source.recipient=recipient;
-	if( EmptyQ(&mbox[source.recipient].wait_q) ){
-		source.sender = CRP;
-		source.time_stamp = sys_time;
-		MsgEnQ(&source, &mbox[source.recipient].msg_q);
+msg_t *source, *destination;
+int msg_id;
+source = (msg_t *)pcb[CRP].TF_ptr->ebx;
+msg_id = source -> recipient;
+	if( (mbox[msg_id].wait_q).size == 0 ){
+	source->sender = CRP;
+	source->time_stamp = sys_time;
+	MsgEnQ(source, &mbox[msg_id].msg_q);
 	}
 	else{
-		pid = DeQ(&mbox[source.recipient].wait_q);
-		*(msg_t *)pcb[pid].TF_ptr->ebx = source;
-		pcb[pid].state = RUN;
-		EnQ(pid, &run_q);
+		int temp_pid = DeQ(&(mbox[msg_id].wait_q));
+		EnQ(temp_pid, &run_q);
+		pcb[temp_pid].state = RUN;
+		destination = (msg_t *)pcb[temp_pid].TF_ptr->ebx;
+		memcpy((char*)destination,(char*)source,sizeof(msg_t));
 	}
-	
-	
 }
 
-void MsgRecieveISR(){
-	int pid;
-	msg_t *local_msg;	
-	
-//	if( EmptyQ(&mbox[CRP].msg_q) ){
-	if( mbox[CRP].msg_q.size==0){
-	EnQ(CRP, &mbox[CRP].wait_q);//clock crp
-	}
+void MsgRcvISR(){
+msg_t *source, *destination;
+	if( (mbox[CRP].msg_q).size == 0){
+		EnQ(CRP, &(mbox[CRP].wait_q));//clock crp
+		pcb[CRP].state = WAIT;
+		CRP = -1;
+		}
 	else{
-		local_msg= MsgDeQ(&mbox[CRP].msg_q);
-		(msg_t *)pcb[pid].TF_ptr->ebx = local_msg;
-	}
-		
+		source = MsgDeQ(&mbox[CRP].msg_q);
+		destination = (msg_t *)pcb[CRP].TF_ptr->ebx;
+		memcpy((char *)destination,(char *)source,sizeof(msg_t));
+}
 }
 
 
