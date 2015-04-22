@@ -53,7 +53,7 @@ void MsgRecieve(msg_t *msg) {
 }
 
 void TipIRQ3(){
-	asm("int $35;" );
+	asm("int $35;" );//not sure if the semicolon mattes or not
 }
 	
 
