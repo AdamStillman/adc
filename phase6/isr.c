@@ -173,7 +173,7 @@ msg_id = source -> recipient;
 	}
 }
 
-void MsgRcvISR(){
+void MsgRecieveISR(){
 msg_t *source, *destination;
 	if( (mbox[CRP].msg_q).size == 0){
 		EnQ(CRP, &(mbox[CRP].wait_q));//clock crp
