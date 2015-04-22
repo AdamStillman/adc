@@ -87,7 +87,7 @@ void Init(){
 	}//while
 }
 /*------------------------------Phase 6 -----------------------------------------------------*/
-void shell () {
+void Shell () {
    int BAUD_RATE, divisor;         // for serial port
    msg_t msg;                      // local message space
    char login[101], password[101]; // login and password strings entered
