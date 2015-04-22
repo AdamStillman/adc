@@ -133,3 +133,25 @@ void MyStrCpy(char *dest, char *src){
    }
    *dest = '\0';
 }	
+
+int MyStrCmp(char *s1, char *s2){
+	while(*s1 && *s2){
+		if(*s1 == *s2){
+			s1++;
+			s2++;
+		}
+		else return 0;
+		if(*s1 != *s2) return 0;
+		
+	}
+	return 1;
+}
+
+int MyStrLen( char *s){
+	int count;
+	while(*s!='\0'){
+		count++;
+		s++;
+	}
+	return count;
+}
