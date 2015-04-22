@@ -197,7 +197,7 @@ msg_t *source, *destination;
 
 
 void IRQ3TX(){
-	char ch = 0;
+	char ch = '\0';
 	if(!EmptyQ(&terminal.echo_q)) ch = DeQ(&terminal.echo_q);
 	else{
 		if(!EmptyQ(&terminal.TX_q)){
@@ -207,9 +207,9 @@ void IRQ3TX(){
 		
 	}
 
-	if(ch == 0) terminal.TX_extra = 1;
+	if(ch == '\0') terminal.TX_extra = 1;
 	else{
-		outportb(COM2_IOBASE+DATA,0);
+		outportb(COM2_IOBASE+DATA,ch);
 		terminal.TX_extra = 0;
 	}
 	
@@ -218,7 +218,7 @@ void IRQ3TX(){
 void IRQ3RX(){
 	char ch;
 	ch = inportb(COM2_IOBASE+DATA) & 0x7F;
-	EnQ((int)ch, &terminal.RX_q);
+	EnQ(ch, &terminal.RX_q);
 	SemPostISR(terminal.RX_sem);
 	if(ch == '\r'){
 		 EnQ((int)'\r', &terminal.echo_q);
