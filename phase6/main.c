@@ -77,7 +77,11 @@ void InitData() {
 	}
 
   MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
-	
+
+//phase6
+		CreateISR(3);
+		CreateISR(4);
+		CreateISR(5);
 
 }
 //new code
