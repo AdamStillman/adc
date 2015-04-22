@@ -37,6 +37,7 @@ extern void SemGetEntry();
 extern void IRQ7Entry();
 extern void MsgSendEntry();
 extern void MsgRecieveEntry();
+extern void IRQ3Entry();
 __END_DECLS
 
 #endif
