@@ -59,29 +59,27 @@ while(1){
 
 
 }//print driver
-
 void Init(){
-	int pid, a;
+	int pid;
 	char key;
 	char my_msg[] = "Hello, my Team is called TSLK \n\0";
-	msg_t msg;       // local, in process space
+	msg_t msg; // local, in process space
 	msg.recipient=2;
 	MyStrCpy(msg.data, my_msg); //to put greeting message (to be printed) into the msg
 	while(1){// infinite loop:
-     		pid=GetPid();
-         	cons_printf("%d ", pid);		// print 0 on PC            show my PID
-		for(a=0; a<1666000; a++) IO_DELAY();   //delay  1 sec               and sleep for 1 second ...
-        
-        if(cons_kbhit()){		//check if key hit
-		key = cons_getchar();
+		pid=GetPid();
+		cons_printf("%d ", pid); // print 0 on PC show my PID
+		Sleep(1); // for(a=0; a<1666000; a++) IO_DELAY(); //delay 1 sec and sleep for 1 second ...
+		if(cons_kbhit()){ //check if key hit
+			key = cons_getchar();
 			switch(key){
 			//phase5
-			case 'p':MsgSend(&msg);  break;
+			case 'p':
+			MsgSnd(&msg); break;
 			case 'b':breakpoint(); break;
 			case 'q': exit(0);
 			}
 		}
-
 	}//while
 }
 /*------------------------------Phase 6 -----------------------------------------------------*/
