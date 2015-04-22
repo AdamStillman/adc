@@ -210,12 +210,12 @@ char *p, ch;
 msg_t msg;
 	while(1){
 		MsgRecieve(&msg);
-		*p=msg.data;
+		p=msg.data;
 		while(1){
 			SemWait(terminal.RX_sem);
 			ch = (char)DeQ(&terminal.RX_q);
 			if(ch=='\r') break;
-			*p++ = ch;
+			p++ = ch;
 		}
 		*p = '\0';
 		msg.recipient = msg.sender;
@@ -238,7 +238,7 @@ msg_t msg;
 				SemWait(terminal.TX_sem);
 				EnQ('\r', &terminal.TX_q);
 			}		
-		p++
+		p++;
 		}
 	msg.recipient = msg.sender;
 	MsgSend(&msg);
