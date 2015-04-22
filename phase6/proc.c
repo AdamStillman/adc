@@ -76,7 +76,7 @@ void Init(){
 		key = cons_getchar();
 			switch(key){
 			//phase5
-			case 'p':MsgSend(2, &msg);  break;
+			case 'p':MsgSend(&msg);  break;
 			case 'b':breakpoint(); break;
 			case 'q': exit(0);
 			}
@@ -135,26 +135,31 @@ void shell () {
      while(1){ // loop a
      
       // prompt valid commands (send msg to STDOUT, receive reply)
-      MyStrCpy(msg.data, "whoami, bye");
+       MyStrCpy(msg.data, "whoami, bye");
+       msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
       
        //  prompt for login (send msg to STDOUT, receive reply)
        MyStrCpy(msg.data, "login: ");
+       msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
        
        //  get login entered (send msg to STDIN, receive reply)
+	msg.recipient = STDIN;
 	MsgSend(&msg);
 	MsgRecieve(&msg);
 	MyStrCpy(login, msg.data);
 	
        //  prompt for password (same as above)
        MyStrCpy(msg.data, "password: ");
+       msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
        
        //  get password entered (same as above)
+       msg.recipient = STDIN;
        MsgSend(&msg);
        MsgRecieve(&msg);
        MyStrCpy(password, msg.data);
@@ -164,6 +169,7 @@ void shell () {
        
        else {  //(else) prompt "Invalid login!\n\0"
        	MyStrCpy(msg.data, "Invalid login! ");
+       	msg.recipient = STDOUT;
        	MsgSend(&msg);
        	MsgRecieve(&msg);
        }
@@ -172,10 +178,12 @@ void shell () {
      while(1) {//loop B:
      //prompt for entering command string
      MyStrCpy(msg.data, "enter command: "); 
+     msg.recipient = STDOUT;
      MsgSend(&msg);
      MsgRecieve(&msg);
     
      //get command string entered
+     msg.recipient = STDIN;
      MsgSend(&msg);
      MsgRecieve(&msg);
      //   if command string is empty, then continue (loop B)
@@ -184,10 +192,12 @@ void shell () {
       else if (MyStrCmp(msg.data, "whoami\0")) { //if command string is "whoami"
        //show login string,
        MyStrCpy(msg.data,login);
+       msg.recipient = STDOUT;//not sure if this is needed here
        MsgSend(&msg);
        MsgRecieve(&msg);
        
        //and an additional "\n\0" (for aesthetics)
+       msg.recipient = STDOUT;//doubly sure
        MyStrCpy(msg.data, "\n\0");
        MsgSend(&msg);
        MsgRecieve(&msg);
@@ -196,6 +206,7 @@ void shell () {
       else { //else other strings are entered in command string
    	//show "Command not found!\n\0"
    	MyStrCpy(msg.data, "Command not found!\n\0");
+   	msg.recipient = STDOUT;
    	MsgSend(&msg);
    	MsgRecieve(&msg);
       }
