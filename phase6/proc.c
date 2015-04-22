@@ -133,13 +133,13 @@ void shell () {
      while(1){ // loop a
      
       // prompt valid commands (send msg to STDOUT, receive reply)
-       MyStrCpy(msg.data, "whoami, bye");
+       MyStrCpy(msg.data, "whoami, bye \n\0");
        msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
       
        //  prompt for login (send msg to STDOUT, receive reply)
-       MyStrCpy(msg.data, "login: ");
+       MyStrCpy(msg.data, "login: \0");
        msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
@@ -151,7 +151,7 @@ void shell () {
 	MyStrCpy(login, msg.data);
 	
        //  prompt for password (same as above)
-       MyStrCpy(msg.data, "password: ");
+       MyStrCpy(msg.data, "password: \0");
        msg.recipient = STDOUT;
        MsgSend(&msg);
        MsgRecieve(&msg);
@@ -166,7 +166,7 @@ void shell () {
        if(MyStrCmp(login, password)) break; // string-compare login and password; if same, break loop A
        
        else {  //(else) prompt "Invalid login!\n\0"
-       	MyStrCpy(msg.data, "Invalid login! ");
+       	MyStrCpy(msg.data, "Invalid login! \n\0");
        	msg.recipient = STDOUT;
        	MsgSend(&msg);
        	MsgRecieve(&msg);
@@ -175,7 +175,7 @@ void shell () {
      } //end of loop a
      while(1) {//loop B:
      //prompt for entering command string
-     MyStrCpy(msg.data, "enter command: "); 
+     MyStrCpy(msg.data, "enter command: \0"); 
      msg.recipient = STDOUT;
      MsgSend(&msg);
      MsgRecieve(&msg);
