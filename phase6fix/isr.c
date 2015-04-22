@@ -38,7 +38,7 @@ void CreateISR(int pid) {
 	else if(pid==2){
 		pcb[pid].TF_ptr->eip = (unsigned int) PrintDriver;
 	}else if(pid == 3){
-		pcb[pid].TF_ptr->eip = (unsigned int)shell;
+		pcb[pid].TF_ptr->eip = (unsigned int)Shell;
 	}else if(pid == 4){
 		pcb[pid].TF_ptr->eip = (unsigned int)STDIN;
 	}else if(pid == 5){
@@ -198,6 +198,51 @@ void MsgRcvISR(){
 		memcpy((char *)destination,(char *)source,sizeof(msg_t));
 	}
 		
+}
+
+void IRQ3TX(){
+	char ch = '\0';
+	if(!EmptyQ(&terminal.echo_q)) ch = DeQ(&terminal.echo_q);
+	else{
+		if(!EmptyQ(&terminal.TX_q)){
+			ch = DeQ(&terminal.TX_q);
+			SemPostISR(terminal.TX_sem);
+		}
+	}
+	if(ch == '\0') terminal.TX_extra = 1;
+	else{
+		outportb(COM2_IOBASE+DATA,ch);
+		terminal.TX_extra = 0;
+	}
+}
+void IRQ3RX(){
+	char ch;
+	ch = inportb(COM2_IOBASE+DATA) & 0x7F;
+	EnQ(ch, &terminal.RX_q);
+	SemPostISR(terminal.RX_sem);
+	if(ch == '\r'){
+		EnQ((int)'\r', &terminal.echo_q);
+		EnQ((int)'\n', &terminal.echo_q);
+	}
+	else{
+	if(terminal.echo==1) EnQ((int)ch, &terminal.echo_q);
+}
+}
+
+void IRQ3ISR(){//phase6
+	int event;
+	outportb(0x20, 0x63); //dismiss IRQ 3: use outportb() to send 0x63 to 0x20
+	//read event from COM2_IOBASE+IIR (Interrupt Indicator Register
+	event = inportb(COM2_IOBASE+IIR);
+	switch(event) {
+		case IIR_TXRDY:// (send char to terminal video)
+		IRQ3TX();
+		break;
+		case IIR_RXRDY://(get char from terminal KB)
+		IRQ3RX();
+		break;
+	}
+	if(terminal.TX_extra==1) IRQ3TX();
 }
 
 
