@@ -126,7 +126,7 @@ void MyStrCpy(char *dest, char *src){
 	}
 	
 	dest[a]='\0';  */
-   while (*src != '\0') {
+   while (*src ) {
       *dest = *src;
       src++;
       dest++;
