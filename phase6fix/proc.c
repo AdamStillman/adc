@@ -102,7 +102,6 @@ void Shell () {
    terminal.echo = 1;   //set echo to 1 (default is to echo back whatever typed from terminal)
    terminal.TX_extra = 1;   //set TX_extra to 1 (an IRQ3 TXRDY event missed)
 
-
     /*
    // COM1-8_IOBASE: 0x3f8 0x2f8 0x3e8 0x2e8 0x2f0 0x3e0 0x2e0 0x260
    // transmit speed 9600 bauds, clear IER, start TXRDY and RXRDY
@@ -137,13 +136,13 @@ void Shell () {
      while(1){ // loop a
      
       // prompt valid commands (send msg to STDOUT, receive reply)
-       MyStrCpy(msg.data, "whoami, bye \n\0");
+       MyStrCpy(msg.data, "TSLK Shell> Commands: who, bye \n\0");
        msg.recipient = STDOUT;
        MsgSnd(&msg);
        MsgRcv(&msg);
       
        //  prompt for login (send msg to STDOUT, receive reply)
-       MyStrCpy(msg.data, "login: \0");
+       MyStrCpy(msg.data, "TSLK Shell> login: \0");
        msg.recipient = STDOUT;
        MsgSnd(&msg);
        MsgRcv(&msg);
@@ -155,7 +154,7 @@ void Shell () {
 	MyStrCpy(login, msg.data);
 	
        //  prompt for password (same as above)
-       MyStrCpy(msg.data, "password: \0");
+       MyStrCpy(msg.data, "TSLK Shell> password: \0");
        msg.recipient = STDOUT;
        MsgSnd(&msg);
        MsgRcv(&msg);
@@ -170,7 +169,7 @@ void Shell () {
        if(MyStrCmp(login, password)) break; // string-compare login and password; if same, break loop A
        
        else {  //(else) prompt "Invalid login!\n\0"
-       	MyStrCpy(msg.data, "Invalid login! \n\0");
+       	MyStrCpy(msg.data, "TSLK Shell> Invalid login! \n\0");
        	msg.recipient = STDOUT;
        	MsgSnd(&msg);
        	MsgRcv(&msg);
@@ -179,7 +178,7 @@ void Shell () {
      } //end of loop a
      while(1) {//loop B:
      //prompt for entering command string
-     MyStrCpy(msg.data, "enter command: \0"); 
+     MyStrCpy(msg.data, "TSLK Shell> enter command: \0"); 
      msg.recipient = STDOUT;
      MsgSnd(&msg);
      MsgRcv(&msg);
@@ -191,7 +190,7 @@ void Shell () {
      //   if command string is empty, then continue (loop B)
       if(MyStrLen(msg.data) == 0) continue;
       else if(MyStrCmp(msg.data, "bye\0")) break; //if command string is "bye", then break (loop B)
-      else if (MyStrCmp(msg.data, "whoami\0")) { //if command string is "whoami"
+      else if (MyStrCmp(msg.data, "who\0")) { //if command string is "whoami"
        //show login string,
        MyStrCpy(msg.data,login);
        msg.recipient = STDOUT;//not sure if this is needed here
@@ -207,7 +206,7 @@ void Shell () {
       } //if command string is "whoami" (end)
       else { //else other strings are entered in command string
    	//show "Command not found!\n\0"
-   	MyStrCpy(msg.data, "Command not found!\n\0");
+   	MyStrCpy(msg.data, "TSLK Shell> Command not found!\n\0");
    	msg.recipient = STDOUT;
    	MsgSnd(&msg);
    	MsgRcv(&msg);

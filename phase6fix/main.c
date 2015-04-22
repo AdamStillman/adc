@@ -39,14 +39,9 @@ void SetEntry(int entry_num, func_ptr_t func_ptr) {
 }
 
 int main() {
-	int pid;
 	InitData(); // to initialize kernel data
 	InitIDT();
 	CreateISR(0); //to create Idle process (PID 0)
-	pid = DeQ(&none_q);
-	CreateISR(pid);
-	pid = DeQ(&none_q);
-	CreateISR(pid);
 	//cons_printf("pcb[0] is at %u. \n", pcb[0].TF_ptr);
 	Dispatch(pcb[0].TF_ptr);
 
@@ -57,7 +52,7 @@ int main() {
 
 
 void InitData() {
-	int i;
+	int i, pid;
   sys_time = 0;
 	CRP = 0;
     //initialize queues (use MyBzero() call)
@@ -75,12 +70,16 @@ void InitData() {
 		EnQ(i, &none_q );// queue PID's 1~19 (skip 0) into none_q (not used PID's)	 
 		EnQ(i, &semaphore_q );
 	}
-
- // MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
-  	CreateISR(3);
-	CreateISR(4);
-	CreateISR(5);
-
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
 }
 //new code
 void InitIDT(){
@@ -98,7 +97,6 @@ void InitIDT(){
   	SetEntry(54, MsgRcvEntry);
   	SetEntry(35, IRQ3Entry);
 	outportb(0x21,~(128+8+1));
-
 }
 
 
@@ -131,9 +129,6 @@ void SelectCRP() {       // pick PID as CRP
 }
 
 void Kernel(TF_t *TF_ptr) {
-
-//   char key;
-   
 //   change state of CRP to kernel mode
 	pcb[CRP].mode = KMODE;
 
@@ -142,20 +137,20 @@ void Kernel(TF_t *TF_ptr) {
 	
 //   call timer ISR to service timer interrupt (as if it just occurred)
 	switch(TF_ptr->intr_num){
-		case TIMER_INTR: 
-			TimerISR(); 
-			break;
-		case SLEEP_INTR:
-			SleepISR(TF_ptr->ebx);
-			break;
-		case GETPID_INTR:
-			GetPidISR();		
-			break;
+    case TIMER_INTR: 
+	TimerISR(); 
+	break;
+    case SLEEP_INTR:
+	SleepISR(TF_ptr->ebx);
+	break;
+    case GETPID_INTR:
+	GetPidISR();		
+	break;
     case SEMWAIT_INTR:
-      SemWaitISR(CRP);
+      SemWaitISR();
       break;
     case SEMPOST_INTR:
-      SemPostISR(CRP);
+      SemPostISR(TF_ptr->ebx);
       break;
    //phase4
     case SEMGET_INTR:
@@ -170,34 +165,13 @@ void Kernel(TF_t *TF_ptr) {
       //phase6
     case IRQ3_INTR:
       IRQ3ISR(); break;
-
     
-		default: 
-		printf("dont PANIC!!!!!!!");
-		breakpoint();
-		break;
-	
-	}
-	
-/*
-if(cons_kbhit()){
-	key = cons_getchar();
-	switch(key){
-		case 'n':
-			if(EmptyQ(&none_q) ) cons_printf("No more process!\n");
-			else {
-				pid = DeQ(&none_q);
-				CreateISR(pid);
-			}
-	   		break;	
-	}		
-} */
-//   call SelectCRP() to settle/determine for next CRP
-
-
-	SelectCRP();
-
-	Dispatch(pcb[CRP].TF_ptr);
-
+    default: 
+	printf("dont PANIC!!!!!!!");
+	breakpoint();
+	break;
+   }
+   SelectCRP();
+   Dispatch(pcb[CRP].TF_ptr);
 }
 

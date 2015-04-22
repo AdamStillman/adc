@@ -123,8 +123,7 @@ void SemWaitISR(){
   }
 }
 
-void SemPostISR(){
-   int semaphoreID = pcb[CRP].TF_ptr->ebx;
+void SemPostISR(int semaphoreID){
    if(semaphore[semaphoreID].wait_q.size == 0){
      semaphore[semaphoreID].count++;
    } else {
@@ -145,7 +144,7 @@ void SemGetISR(){
 	   semaphore[sid].count = count;
 	}
 
-	pcb[CRP].TF_ptr->ecx= sid;
+	pcb[CRP].TF_ptr->ecx = sid;
 }
 
 void IRQ7ISR(){
