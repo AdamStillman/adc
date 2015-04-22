@@ -11,5 +11,6 @@ void SemPost(int);
 int SemGet(int);
 void MsgSnd(msg_t *);
 void MsgRcv(msg_t *);
+void TipIRQ3();
 
 #endif
