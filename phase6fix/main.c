@@ -28,6 +28,8 @@ q_t semaphore_q;
 //phase5
 mbox_t mbox[MAX_PROC];
 
+//phase 6
+terminal_t terminal;
 
 void SetEntry(int entry_num, func_ptr_t func_ptr) {
 	struct i386_gate *gateptr = &IDT_ptr[entry_num];
@@ -59,9 +61,9 @@ void InitData() {
   sys_time = 0;
 	CRP = 0;
     //initialize queues (use MyBzero() call)
-	initq(&run_q);
-	initq(&none_q);
-	initq(&sleep_q);
+//	initq(&run_q);
+//	initq(&none_q);
+//	initq(&sleep_q);
 	MyBzero((char *) &run_q, sizeof(q_t) );
 	MyBzero((char *) &none_q, sizeof(q_t));
 	MyBzero((char *) &sleep_q, sizeof(q_t));
@@ -74,8 +76,10 @@ void InitData() {
 		EnQ(i, &semaphore_q );
 	}
 
-  MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
-	
+ // MyBzero((char *) semaphore, sizeof(q_t));//might need to be &semaphore_q[product_semaphore].wait_q
+  	CreateISR(3);
+	CreateISR(4);
+	CreateISR(5);
 
 }
 //new code
@@ -92,7 +96,8 @@ void InitIDT(){
   	SetEntry(39, IRQ7Entry);
   	SetEntry(53, MsgSndEntry);
   	SetEntry(54, MsgRcvEntry);
-  	outportb(0x21, ~129); //pic mask to open irq7?
+  	SetEntry(35, IRQ3Entry);
+	outportb(0x21,~(128+8+1));
 
 }
 
@@ -162,6 +167,9 @@ void Kernel(TF_t *TF_ptr) {
       MsgSndISR(); break;
     case MSGRCV_INTR:
       MsgRcvISR(); break;
+      //phase6
+    case IRQ3_INTR:
+      IRQ3ISR(); break;
 
     
 		default: 
