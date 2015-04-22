@@ -84,7 +84,7 @@ void MsgEnQ(msg_t *p, msg_q_t *q){
 }
 
 msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
-/*
+
 	msg_t* msg;
 	if(p->size > 0)
 	{
@@ -103,20 +103,8 @@ msg_t *MsgDeQ(msg_q_t *p){ // return -1 if q is empty
 	}
 
 	return msg;	
-*/
 
-msg_t *msg;
-if(p->size ==0){
-cons_printf("Message queue is Empty!\n");
-return '\0';
-}
-msg = &p->msg[p->head];
-p->head++;
-if(p->head == Q_SIZE){
-p->head = 0;
-}
-p->size--;
-return msg;
+
 
 }
 
