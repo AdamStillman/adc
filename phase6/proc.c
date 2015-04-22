@@ -171,7 +171,7 @@ void shell () {
      } //end of loop a
      while(1) {//loop B:
      //prompt for entering command string
-     MsgStrCpy(msg.data, "enter command: "); 
+     MyStrCpy(msg.data, "enter command: "); 
      MsgSend(STDOUT, &msg);
      MsgRecieve(&msg);
     
@@ -179,9 +179,9 @@ void shell () {
      MsgSend(STDIN, &msg);
      MsgRecieve(&msg);
      //   if command string is empty, then continue (loop B)
-      if(MyStrlen(msg.data) == 0) continue;
-      else if(MyStrcmp(msg.data, "bye\0")) break; //if command string is "bye", then break (loop B)
-      else if (MyStrcmp(msg.data, "whoami\0")) { //if command string is "whoami"
+      if(MyStrLen(msg.data) == 0) continue;
+      else if(MyStrCmp(msg.data, "bye\0")) break; //if command string is "bye", then break (loop B)
+      else if (MyStrCmp(msg.data, "whoami\0")) { //if command string is "whoami"
        //show login string,
        MyStrCpy(msg.data,login);
        MsgSend(STDOUT, &msg);
@@ -206,7 +206,7 @@ void shell () {
 
 
 void STDIN(){
-ch *p, ch;
+char *p, ch;
 msg_t msg;
 	while(1){
 		MsgRecieve(&msg);
