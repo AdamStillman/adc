@@ -247,14 +247,4 @@ void IRQ3ISR(){//phase6
 	if(terminal.TX_extra==1) IRQ3TX();
 }
 
-void ShellDirStr(attr_t *p, char *str) {
-   // p points to attr_t and then obj name (p+1)
-      char *obj = (char *)(p + 1);
 
-   // make str from the attr_t that p points to
-      sprintf(str, " - - - -  size =%6d     %s\n", p->size, obj);
-      if ( A_ISDIR(p->mode) ) str[1] = 'd';         // mode is directory
-      if ( QBIT_ON(p->mode, A_ROTH) ) str[3] = 'r'; // mode is readable
-      if ( QBIT_ON(p->mode, A_WOTH) ) str[5] = 'w'; // mode is writable
-      if ( QBIT_ON(p->mode, A_XOTH) ) str[7] = 'x'; // mode is executable
-   }
