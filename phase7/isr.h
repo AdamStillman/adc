@@ -16,5 +16,6 @@ void MsgRcvISR();
 void IRQ3ISR();
 void IRQ3TX();
 void IRQ3RX();
+void ShellDirStr(attr_t *, char *);//this might be just char
 
 #endif
