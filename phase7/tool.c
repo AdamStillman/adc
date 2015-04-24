@@ -147,3 +147,25 @@ int MyStrLen( char *s){
 	}
 	return count;
 }
+
+void MyMemcpy(char *dest, char *src, int size){
+	int b;
+	for(b = 0; b <= size ; b++){
+		*dest = *src;
+		src++;
+		dest++;
+	}
+	
+}
+
+int MyStrcmpSize(char *p, char *q, int size){
+	int b;
+	for(b = 0; b <= size ; b++){
+		if(*s1 == *s2){
+			s1++;
+			s2++;
+		}else 
+			return 0;
+	}
+	return 1;
+}
