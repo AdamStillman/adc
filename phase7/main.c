@@ -80,6 +80,8 @@ void InitData() {
 	CreateISR(pid);
 	pid = DeQ(&none_q);
 	CreateISR(pid);
+	pid = DeQ(&none_q);
+	CreateISR(pid);
 }
 //new code
 void InitIDT(){
