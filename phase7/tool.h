@@ -16,6 +16,8 @@ msg_t *MsgDeQ(msg_q_t *);
 void MyStrCpy(char *dest, char *src);
 int MyStrCmp(char *s1, char *s2);
 int MyStrLen( char *s);
+void MyMemcpy(char *, char *, int);
+int MyStrcmpSize(char *, char *, int);
 
 #endif
 
