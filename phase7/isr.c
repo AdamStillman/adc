@@ -43,7 +43,10 @@ void CreateISR(int pid) {
 		pcb[pid].TF_ptr->eip = (unsigned int)STDIN;
 	}else if(pid == 5){
 		pcb[pid].TF_ptr->eip = (unsigned int)STDOUT;
-	}	
+	}
+	else if(pid == 6){
+		pcb[pid].TF_ptr->eip = (unsigned int)FileMgr;
+	}
 	else pcb[pid].TF_ptr->eip = (unsigned int) UserProc;
 
 		//fillout trapframe of new proc
