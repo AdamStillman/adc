@@ -39,7 +39,9 @@ typedef struct{ //Used for semaphores
 typedef struct {
   int sender,
   recipient,
-  time_stamp;
+  time_stamp,
+  code,
+  number[3];
   char data[101];
 } msg_t;
 
