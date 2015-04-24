@@ -11,4 +11,6 @@ void Init();
 void Shell();
 void STDIN();
 void STDOUT();
+void ShellDirStr(attr_t *p, char *str);
+void ShellDir(char *, int, int);
 #endif
