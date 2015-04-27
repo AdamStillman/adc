@@ -274,7 +274,9 @@ void ShellDirStr(attr_t *p, char *str) {
    
 void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101];
+      attr_t p;
       msg_t msg;
+      int STDIN = 4, STDOUT = 5, FileMgr=6;
 
    // if cmd is "dir\0" (or "333\0") assume root: "dir /\0"
    // else, there should be an obj after 1st 4 letters "dir "
@@ -289,26 +291,47 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    //*************************************************************************
    // write code:
    // apply standard "check object" protocol
+   
    //    prep msg: put correct code and obj into msg
+   	MyStrCpy(msg.data, obj);
+   	msg.code = 80;//need to veify why aaron put 80 im not sure where this came from
    //    send msg to FileMgr, receive reply, chk result code
+   	msg.recipient=FileMgr;
+	MsgSnd(&msg);
+	MsgRcv(&msg);
    // if code is not GOOD
+   if(msg.code != 1){//what is the 1?
    //    prompt error msg via STDOUT
+   MyStrCpy(msg.data, "There was an error with the msg.code. \n");
    //    receive reply
+   msg.recipient = STDOUT;
+   MsgSnd(&msg);
+   MsgRcv(&msg);
    //    return;        // cannot continue
+   return;
+   }
    //*************************************************************************
-
+	
+	
+	
+	
    //*************************************************************************
    // otherwise, code is good, returned msg has an "attr_t" type,
    // check if user directed us to a file, then "dir" for that file;
    // write code:
-   // p = (attr_t *)msg.data;
-   //
-   // if( ! A_ISDIR(p->mode) ) {
-   //    ShellDirStr(p, str);        // str will be built and returned
+   		p = (attr_t *)msg.data;
+   		if( ! A_ISDIR(p->mode) ) {
+   			ShellDirStr(p, str);        // str will be built and returned
    //    prep msg and send to STDOUT
+   			msg.recipient = STDOUT;
+   			MsgSnd(&msg);
    //    receive reply
+   			MsgRcv(&msg);
+   			
    //    return;
-   // }
+   			return;
+   		}
+   
    //*************************************************************************
 
    //*************************************************************************
@@ -316,14 +339,24 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // request to open it, then issue read in loop
    // write code:
    // apply standard "open object" protocol
+   msg.code=81;
    // prep msg: put code and obj in msg
+   MyStrCpy(msg.data, obj);
    // send msg to FileMgr, receive msg back (should be OK)
+   MsgSnd(&msg);
+   MsgRcv(&msg);
    //
    // loop
+   if(msg.code==1){
    //    apply standard "read object" protocol
+   	msg.code=82
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
+   	MsgSnd(&msg);
+   	MsgRcv(&msg);
+   	if(msg.code !=1) break;
    //    if code came back is not GOOD, break loop
+   }
    //    (if continued, code was good)
    //    do the same thing with ShellDirStr() like above
    //    then show str via STDOUT
