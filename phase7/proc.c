@@ -425,7 +425,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // (below much similar as what done above:)
    // otherwise, a file, then show its content: request open
 		while(1) { // loop to read
-			 msg.recipient=FILEMGR;
+			 msg.recipient=FileMgr;
 			 msg.code = READ_OBJ;
 			 
 			 MsgSnd(&msg);
@@ -443,7 +443,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
 		}
    
 		// request to close FD
-		msg.recipient=FILEMGR;
+		msg.recipient=FileMgr;
 		msg.code = CLOSE_OBJ;
 		
 		MsgSnd(&msg);
