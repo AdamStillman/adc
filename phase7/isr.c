@@ -9,7 +9,7 @@
 #include "syscall.h"
 #include "FileMgr.h"
 
-int wakingID;
+int wakingID;//why isnt this working file mgr wtf
 
 void CreateISR(int pid) {
 //cons_printf("in create ISR\n");
