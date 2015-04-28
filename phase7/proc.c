@@ -301,7 +301,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    	MyStrCpy(msg.data, obj);
    	msg.code = CHK_OBJ;
    //    send msg to FileMgr, receive reply, chk result code
-   	msg.recipient= 6;
+   	msg.recipient= FileMgr;
 	MsgSnd(&msg);
 	MsgRcv(&msg);
    // if code is not GOOD
