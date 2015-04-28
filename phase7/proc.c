@@ -216,7 +216,7 @@ void Shell () {
    	msg.recipient = STDOUT;
    	MsgSnd(&msg);
    	MsgRcv(&msg);
-      }
+      
      }// if command string is empty block (end)
    }//  repeat loop B
 } //  repeat infinite loop
