@@ -280,12 +280,12 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
 
    // if cmd is "dir\0" (or "333\0") assume root: "dir /\0"
    // else, there should be an obj after 1st 4 letters "dir "
-      if(MyStrcmp(cmd, "dir\0") == 1 || MyStrcmp(cmd, "333\0") == 1) {
+      if(MyStrCmp(cmd, "dir\0") == 1 || MyStrCmp(cmd, "333\0") == 1) {
          obj[0] = '/';
          obj[1] = '\0';                           // null-terminate the obj[]
       } else {
          cmd += 4;         // skip 1st 4 letters "dir " and get the rest (obj)
-         MyStrcpy(obj, cmd); // make sure cmd is null-terminated from Shell()
+         MyStrCpy(obj, cmd); // make sure cmd is null-terminated from Shell()
       }
 
    //*************************************************************************
@@ -319,7 +319,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // otherwise, code is good, returned msg has an "attr_t" type,
    // check if user directed us to a file, then "dir" for that file;
    // write code:
-   		p = (attr_t *)msg.data;
+   		p = (attr_t *) msg.data;
    		if( ! A_ISDIR(p->mode) ) {
    			ShellDirStr(p, str);        // str will be built and returned
    //    prep msg and send to STDOUT
@@ -354,7 +354,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    		msg.recipient= FileMgr;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
-   		MyStrCpy(msg.data, (attr_t*)msg.data->data)
+   		MyStrCpy(msg.data, (attr_t *)msg.data->data)
    		MsgSnd(&msg);
    		MsgRcv(&msg);
    		
