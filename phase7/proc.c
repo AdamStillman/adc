@@ -433,8 +433,6 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
 			 
 			 if(msg.code == GOOD )
 			 {
-			 	 p = (attr_t *)msg.data;
-            			ShellDirStr(p, str);   
 				msg.recipient = STDOUT; //    display what's read via STDOUT
 				MsgSnd(&msg);
 				MsgRcv(&msg);
