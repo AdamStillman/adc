@@ -7,6 +7,7 @@
 #include "syscall.h"
 #include <spede/machine/parallel.h>
 #include "tool.h"
+#include "FileMgr.h"
 
 void Idle() {
 	int i =0;
@@ -276,7 +277,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101];
       attr_t p;
       msg_t msg;
-      int STDIN = 4, STDOUT = 5, FileMgr=6;
+      int STDIN = 4, STDOUT = 5;
 
    // if cmd is "dir\0" (or "333\0") assume root: "dir /\0"
    // else, there should be an obj after 1st 4 letters "dir "
@@ -294,13 +295,13 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    
    //    prep msg: put correct code and obj into msg
    	MyStrCpy(msg.data, obj);
-   	msg.code = 80;//need to veify why aaron put 80 im not sure where this came from
+   	msg.code = CHK_OBJ;//need to veify why aaron put 80 im not sure where this came from
    //    send msg to FileMgr, receive reply, chk result code
-   	msg.recipient=FileMgr;
+   	msg.recipient=6;
 	MsgSnd(&msg);
 	MsgRcv(&msg);
    // if code is not GOOD
-   if(msg.code != 1){//what is the 1?
+   if(msg.code != GOOD){
    //    prompt error msg via STDOUT
    MyStrCpy(msg.data, "There was an error with the msg.code. \n");
    //    receive reply
@@ -339,7 +340,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // request to open it, then issue read in loop
    // write code:
    // apply standard "open object" protocol
-   msg.code=81;
+   msg.code=OPEN_OBJ;
    // prep msg: put code and obj in msg
    MyStrCpy(msg.data, obj);
    // send msg to FileMgr, receive msg back (should be OK)
@@ -347,16 +348,18 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    MsgRcv(&msg);
    //
    // loop
-   if(msg.code==1){
+   if(msg.code==GOOD){
    //    apply standard "read object" protocol
    	while(1){
-   		msg.code=82;
-   		msg.recipient= FileMgr;
+   		msg.code=READ_OBJ;
+   		msg.recipient= 6;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
+   		MyStrCpy(msg.data, (attr_t*)msg.data->data)
    		MsgSnd(&msg);
    		MsgRcv(&msg);
-   		if(msg.code ==1){
+   		
+   		if(msg.code ==GOOD){
    			p = (attr_t *)msg.data;
    			ShellDirStr(p, str);
    			msg.recipient= STDOUT;
@@ -373,17 +376,16 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    //    then show str via STDOUT
    // }
    msg.recipient = STDOUT;
-   msg.code=83;
+   msg.code=CLOSE_OBJ;
    MyStrCpy(msg.data, obj);
    MsgSnd(&msg);
    MsgRcv(&msg);
    
-   if(msg.code !=1){
-   	MyStrCpy(msg.data, "The request was not valied.\n");
+   if(msg.code !=GOOD){
+   	MyStrCpy(msg.data, "The request was not valid.\n");
    	msg.recipient=STDOUT;
    	MsgSnd(&msg);
    	MsgRcv(&msg);
-   	return;
    	//promptuser
    }
    //*************************************************************************
