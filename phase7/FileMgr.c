@@ -263,7 +263,7 @@ int ReadObj( int fd, char *buff, int owner, int *lp_actual ) {
       MyMemcpy((char *)( attr_p + 1 ), dir_p->name, MyStrLen( dir_p->name ) + 1);
 
 //     *lp_actual = sizeof(*dir_p) + MyStrlen((char *)(attr_p + 1)) + 1;
-      *lp_actual = sizeof( attr_t ) + MyStrlen( dir_p->name ) + 1;
+      *lp_actual = sizeof( attr_t ) + MyStrLen( dir_p->name ) + 1;
 
    } else {  // a file, not dir
 // compute max # of bytes can transfer then MyMemcpy()
