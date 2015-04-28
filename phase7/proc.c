@@ -205,9 +205,9 @@ void Shell () {
        MsgRcv(&msg);
        continue; // continue (loop B)
       } //if command string is "whoami" (end)
-      else if(MyStrCmp(msg.data, "dir\0")){
+      else if(MyStrcmpSize(msg.data, "dir\0",3)==1){
       	ShellDir(msg.data, STDOUT,FileMgr);
-      }else if (MyStrcmpSize(msg.data,"typ",3)){
+      }else if (MyStrcmpSize(msg.data,"typ",3)==1){
 	ShellTyp(msg.data, STDOUT,FileMgr);
       }
       else { //else other strings are entered in command string
@@ -299,7 +299,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    
    //    prep msg: put correct code and obj into msg
    	MyStrCpy(msg.data, obj);
-   	msg.code = CHK_OBJ;//need to veify why aaron put 80 im not sure where this came from
+   	msg.code = CHK_OBJ;
    //    send msg to FileMgr, receive reply, chk result code
    	msg.recipient=FileMgr;
 	MsgSnd(&msg);
@@ -328,6 +328,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    		if( ! A_ISDIR(p->mode) ) {
    			ShellDirStr(p, str);        // str will be built and returned
    //    prep msg and send to STDOUT
+   			MyStrCpy(msg.data, str);
    			msg.recipient = STDOUT;
    			MsgSnd(&msg);
    //    receive reply
