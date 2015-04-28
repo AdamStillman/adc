@@ -260,7 +260,7 @@ int ReadObj( int fd, char *buff, int owner, int *lp_actual ) {
       Dir2Attr( dir_p, attr_p );
 
 // copy obj name after attr_t, add 1 to length for null
-      MyMemcpy((char *)( attr_p + 1 ), dir_p->name, MyStrlen( dir_p->name ) + 1);
+      MyMemcpy((char *)( attr_p + 1 ), dir_p->name, MyStrLen( dir_p->name ) + 1);
 
 //     *lp_actual = sizeof(*dir_p) + MyStrlen((char *)(attr_p + 1)) + 1;
       *lp_actual = sizeof( attr_t ) + MyStrlen( dir_p->name ) + 1;
