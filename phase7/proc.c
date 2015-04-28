@@ -277,7 +277,6 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101];
       attr_t p;
       msg_t msg;
-      int STDIN = 4, STDOUT = 5;
 
    // if cmd is "dir\0" (or "333\0") assume root: "dir /\0"
    // else, there should be an obj after 1st 4 letters "dir "
@@ -297,7 +296,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    	MyStrCpy(msg.data, obj);
    	msg.code = CHK_OBJ;//need to veify why aaron put 80 im not sure where this came from
    //    send msg to FileMgr, receive reply, chk result code
-   	msg.recipient=6;
+   	msg.recipient=FileMgr;
 	MsgSnd(&msg);
 	MsgRcv(&msg);
    // if code is not GOOD
@@ -352,7 +351,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    //    apply standard "read object" protocol
    	while(1){
    		msg.code=READ_OBJ;
-   		msg.recipient= 6;
+   		msg.recipient= FileMgr;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
    		MyStrCpy(msg.data, (attr_t*)msg.data->data)
