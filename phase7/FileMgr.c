@@ -183,7 +183,7 @@ int ChkObj( char *name, attr_t *attr_p ) {
    Dir2Attr( dir_p, attr_p ); // copy what dir_p points to to where attr_p points to
 
 // this should be included to pass the filename (add 1 to length for null)
-   MyMemcpy( (char *)( attr_p + 1 ), dir_p->name, MyStrlen( dir_p->name ) + 1 );
+   MyMemcpy( (char *)( attr_p + 1 ), dir_p->name, MyStrLen( dir_p->name ) + 1 );
 
    return GOOD;
 }
