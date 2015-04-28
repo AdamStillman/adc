@@ -205,6 +205,11 @@ void Shell () {
        MsgRcv(&msg);
        continue; // continue (loop B)
       } //if command string is "whoami" (end)
+      else if(MyStrCmp(msg.data, "dir\0"){
+      	ShellDir(msg.data, STDOUT,FileMgr);
+      }else if (MyStrcmpSize(msg.data,"typ",3)){
+	ShellTyp(msg.data, STDOUT,FileMgr);
+      }
       else { //else other strings are entered in command string
    	//show "Command not found!\n\0"
    	MyStrCpy(msg.data, "TSLK Shell> Command not found!\n\0");
