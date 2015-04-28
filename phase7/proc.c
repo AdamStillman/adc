@@ -349,18 +349,37 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // loop
    if(msg.code==1){
    //    apply standard "read object" protocol
-   	msg.code=82
+   	while(1){
+   		msg.code=82;
+   		msg.recipient= FileMgr;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
-   	MsgSnd(&msg);
-   	MsgRcv(&msg);
-   	if(msg.code !=1) break;
+   		MsgSnd(&msg);
+   		MsgRcv(&msg);
+   		if(msg.code ==1){
+   			p = (attr_t *)msg.data;
+   			ShellDirStr(p, str);
+   			msg.recipient= STDOUT;
+   			MsgSnd(&msg);
+   			MsgRcv(&msg);
+   		}
+   		else break;
    //    if code came back is not GOOD, break loop
+   
+   	};
    }
    //    (if continued, code was good)
    //    do the same thing with ShellDirStr() like above
    //    then show str via STDOUT
    // }
+   msg.recipient = STDOUT;
+   msg.code=83;
+   MsgSnd(&msg);
+   MsgRcv(&msg);
+   
+   if(msg.code !=1){
+   	//promptuser
+   }
    //*************************************************************************
    //*************************************************************************
    // write code:
