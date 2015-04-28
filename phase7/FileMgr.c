@@ -344,7 +344,7 @@ dir_t *FindName( char *name ) {
 // once any dir matched, don't return name which dir was matched
 dir_t *FindNameSub( char *name, dir_t *this_dir ) {
    dir_t *dir_p = this_dir;
-   int len = MyStrlen( name );
+   int len = MyStrLen( name );
    char *p;
 
 // if name ends in '/', chances are we need to decend into the dir
