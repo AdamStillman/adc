@@ -275,7 +275,7 @@ void ShellDirStr(attr_t *p, char *str) {
    
 void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101];
-      attr_t p;
+      attr_t *p;
       msg_t msg;
 
    // if cmd is "dir\0" (or "333\0") assume root: "dir /\0"
@@ -354,7 +354,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    		msg.recipient= FileMgr;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
-   		MyStrCpy(msg.data, (attr_t *)msg.data->data)
+   		MyStrCpy(msg.data, (attr_t *)msg.data->data);
    		MsgSnd(&msg);
    		MsgRcv(&msg);
    		
