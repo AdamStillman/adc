@@ -354,7 +354,7 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    		msg.recipient= FileMgr;
    //    prep msg: put code in msg and send to FileMgr
    //    receive reply
-   		MyStrCpy(msg.data, (attr_t *)msg.data->data);
+   		MyStrCpy(msg.data, obj);//(attr_t *)msg.data->data
    		MsgSnd(&msg);
    		MsgRcv(&msg);
    		
