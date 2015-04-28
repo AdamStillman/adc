@@ -403,9 +403,9 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       
    // write code:
     cmd += 4;         // skip 1st 4 characters in cmd ("typ ") to get rest
-    MyStrcpy(msg.data, cmd);  // copy rest to msg.data
+    MyStrCpy(msg.data, cmd);  // copy rest to msg.data
    
-   msg.recipient=FILEMGR; // ask FileMgr to check object on this
+   msg.recipient=FileMgr; // ask FileMgr to check object on this
    msg.code = CHK_OBJ;
    
    MsgSnd(&msg);
