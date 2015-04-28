@@ -401,11 +401,12 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101]; // get away without obj
       attr_t *p;
       msg_t msg;
-
-   //*************************************************************************
+      
    // write code:
-   // skip 1st 4 characters in cmd ("typ ") to get rest
-   // copy rest to msg.data
+    cmd += 4;         // skip 1st 4 characters in cmd ("typ ") to get rest
+    MyStrcpy(msg.data, cmd);  // copy rest to msg.data
+   
+  
    // ask FileMgr to check object on this
    //
    // if result not GOOD, or p->mode is a directory
@@ -418,6 +419,5 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    //    break if can read not good
    //    display what's read via STDOUT
    // request to close FD
-   //*************************************************************************
    }
 
