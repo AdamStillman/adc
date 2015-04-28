@@ -374,10 +374,16 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    // }
    msg.recipient = STDOUT;
    msg.code=83;
+   MyStrCpy(msg.data, obj);
    MsgSnd(&msg);
    MsgRcv(&msg);
    
    if(msg.code !=1){
+   	MyStrCpy(msg.data, "The request was not valied.\n");
+   	msg.recipient=STDOUT;
+   	MsgSnd(&msg);
+   	MsgRcv(&msg);
+   	return;
    	//promptuser
    }
    //*************************************************************************
