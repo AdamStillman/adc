@@ -396,27 +396,66 @@ void ShellDir(char *cmd, int STDOUT, int FileMgr) {
    //*************************************************************************
    }
 
- void ShellTyp(char *cmd, int STDOUT, int FileMgr) {
+  void ShellTyp(char *cmd, int STDOUT, int FileMgr) {
       char obj[101], str[101]; // get away without obj
       attr_t *p;
       msg_t msg;
       
    // write code:
     cmd += 4;         // skip 1st 4 characters in cmd ("typ ") to get rest
-    MyStrCpy(msg.data, cmd);  // copy rest to msg.data
+    MyStrcpy(msg.data, cmd);  // copy rest to msg.data
    
-  
-   // ask FileMgr to check object on this
-   //
-   // if result not GOOD, or p->mode is a directory
-   //    display "Usage: typ [path]<filename>\n\0"
-   //    and return, impossible to continue
+   msg.recipient=FILEMGR; // ask FileMgr to check object on this
+   msg.code = CHK_OBJ;
+   
+   MsgSnd(&msg);
+   MsgRcv(&msg);
+   
+   // if code is not GOOD
+   if(msg.code != GOOD ||  A_ISDIR(p->mode)){// if result not GOOD, or p->mode is a directory
+		MyStrCpy(msg.data, "TSLK Shell> Usage: [path]<filename>\n\0"); //    display "Usage: typ [path]<filename>\n\0"
+       	msg.recipient = STDOUT;
+       	MsgSnd(&msg);
+       	MsgRcv(&msg);
+	
+   
+		return;//    and return, impossible to continue
+   } else {
    //
    // (below much similar as what done above:)
    // otherwise, a file, then show its content: request open
-   // loop to read
-   //    break if can read not good
-   //    display what's read via STDOUT
-   // request to close FD
-   }
+		while(1) { // loop to read
+			 msg.recipient=FILEMGR;
+			 msg.code = READ_OBJ;
+			 
+			 MsgSnd(&msg);
+			 MsgRcv(&msg);
+			 
+			 if(msg.code == GOOD )
+			 {
+				msg.recipient = STDOUT; //    display what's read via STDOUT
+				MsgSnd(&msg);
+				MsgRcv(&msg);
+			 }
+			 else {
+				break; //    break if can read not good
+			 }
+		}
+   
+		// request to close FD
+		msg.recipient=FILEMGR;
+		msg.code = CLOSE_OBJ;
+		
+		MsgSnd(&msg);
+		MsgRcv(&msg);
 
+		if( msg.code != GOOD )
+		{
+			MyStrCpy(msg.data, "TSLK Shell> Error: Cannot Close fd object\n\0"); //    display "Error: Cannot Close fd object\n\0"
+			msg.recipient = STDOUT;
+			MsgSnd(&msg);
+			MsgRcv(&msg);
+		}
+		
+   }
+  }
