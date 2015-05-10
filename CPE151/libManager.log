@@ -1,0 +1,12 @@
+\o Program:		@(#)$CDS: libManager.exe version Exp 01/19/2010 20:09 (ocelot-linux) $
+\o Sub version:		sub-version none
+\o Arguments:		-mpssession icfb11900 -mpshost thea 
+\o Working Directory:	thea:/gaia/class/student/kennedys/CPE151
+\o Library Manager customization server connected.
+MPS service: map window
+\o Log file is "/gaia/class/student/kennedys/CPE151/libManager.log".
+Opening libManager window.
+Main selection: CPE151 adc layout
+\o Opening design file through session server.
+MPS request: edit design
+MPS request: update library list
