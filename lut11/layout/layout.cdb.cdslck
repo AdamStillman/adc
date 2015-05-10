@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      kennedys
+HostName                       thea.ecs.csus.edu
+ProcessIdentifier              7276
+ProcessCreationTime_UTC        1430976951
+ProcessCreationTime_Readable   Wed May  6 22:35:51 2015 PDT
+AppIdentifier                  /software/IC5141/tools/dfII/bin/icfb.exe
+OSType                         lnx86
+ReasonForPlacingEditLock       XXsave write lock
+FilePathUsedToEditLock         /gaia/class/student/kennedys/CPE151/LUT11/layout/layout.cdb
+TimeEditLocked                 Wed May  6 23:20:38 2015 PDT
